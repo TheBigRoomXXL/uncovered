@@ -1,8 +1,8 @@
 package models
 
 type Config struct {
-	reportPath  string
-	includes    []string
-	excludes    []string
-	contextSize int
+	ReportPath  string
+	Includes    []string
+	Excludes    []string
+	ContextSize int
 }
