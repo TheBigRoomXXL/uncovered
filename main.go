@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"uncovered/cli"
+	"uncovered/pkg/filtering"
 	"uncovered/pkg/parsing"
 	"uncovered/pkg/rendering"
 )
@@ -28,7 +29,8 @@ func main() {
 	}
 	defer report.Close()
 
-	untested, err := parsing.ParseCobertura(report, config.Includes, config.Excludes)
+	fileFilter := filtering.FilterForFiles(config.Includes, config.Excludes)
+	untested, err := parsing.ParseCobertura(report, fileFilter)
 	if err != nil {
 		log.Fatal("failed to parse report: ", err)
 	}

@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"slices"
 	"sort"
 	"uncovered/pkg/models"
 )
@@ -25,7 +24,7 @@ type coberturaReport struct {
 }
 
 // Parse a cobertura XMl coverage report to extract all untest code patchs
-func ParseCobertura(report io.Reader, includes, excludes []string) ([]models.Patch, error) {
+func ParseCobertura(report io.Reader, filterFile func(filtepath string) bool) ([]models.Patch, error) {
 	var parsed coberturaReport
 	if err := xml.NewDecoder(report).Decode(&parsed); err != nil {
 		return nil, fmt.Errorf("cannot decode coverage report: %w", err)
@@ -33,10 +32,7 @@ func ParseCobertura(report io.Reader, includes, excludes []string) ([]models.Pat
 	patchs := []models.Patch{}
 	for _, pkg := range parsed.Packages {
 		for _, class := range pkg.Classes {
-			if len(includes) > 0 && !slices.Contains(includes, class.Filename) {
-				continue
-			}
-			if len(excludes) > 0 && slices.Contains(excludes, class.Filename) {
+			if filterFile(class.Filename) {
 				continue
 			}
 
