@@ -138,6 +138,48 @@ func Test_FilterForFiles(t *testing.T) {
 			excludes: []string{"/something/truc.go"},
 			expected: false,
 		},
+		{
+			name:     "multiple-excludes-match-first",
+			filepath: "something/truc.go",
+			includes: []string{},
+			excludes: []string{"truc.go", "machin.go"},
+			expected: false,
+		},
+		{
+			name:     "multiple-includes-match-second",
+			filepath: "something/truc.go",
+			includes: []string{"bidule.go", "truc.go"},
+			excludes: []string{},
+			expected: true,
+		},
+		{
+			name:     "multiple-includes-none-match",
+			filepath: "something/truc.go",
+			includes: []string{"bidule.go", "machin.go"},
+			excludes: []string{},
+			expected: false,
+		},
+		{
+			name:     "multiple-excludes-none-match",
+			filepath: "something/truc.go",
+			includes: []string{},
+			excludes: []string{"bidule.go", "machin.go"},
+			expected: true,
+		},
+		{
+			name:     "include-matches-but-one-of-multiple-excludes-matches",
+			filepath: "something/truc.go",
+			includes: []string{"something", "other"},
+			excludes: []string{"bidule.go", "truc.go"},
+			expected: false,
+		},
+		{
+			name:     "multiple-includes-one-matches-multiple-excludes-none-match",
+			filepath: "something/truc.go",
+			includes: []string{"other/", "truc.go"},
+			excludes: []string{"foo/", "bar/"},
+			expected: true,
+		},
 	}
 
 	for _, tc := range tests {
