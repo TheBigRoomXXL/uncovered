@@ -1,9 +1,11 @@
 package filtering
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"pgregory.net/rapid"
 )
 
 func Test_FilterForFiles(t *testing.T) {
@@ -190,4 +192,24 @@ func Test_FilterForFiles(t *testing.T) {
 			assert.Equal(t, tc.expected, result)
 		})
 	}
+}
+
+func Test_FilterForFiles_PBT(t *testing.T) {
+	rapid.Check(t, func(t *rapid.T) {
+
+		filepath := rapid.String().Draw(t, "filepath")
+		includes := rapid.SliceOf(rapid.String()).Draw(t, "includes")
+		excludes := rapid.SliceOf(rapid.String()).Draw(t, "excludes")
+
+		fmt.Println("filepath", filepath, "includes", includes, "excludes", excludes)
+
+		filefunc := FilterForFiles(includes, excludes)
+
+		assert.NotPanics(t, func() { filefunc(filepath) })
+
+		for _, excluded := range excludes {
+			result := filefunc(excluded)
+			assert.False(t, result, "excluded result should always be filtered out")
+		}
+	})
 }
