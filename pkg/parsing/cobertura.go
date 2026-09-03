@@ -10,6 +10,7 @@ import (
 
 // coberturaReport mirrors the subset of the cobertura XML schema we need:
 // every class carries a filename and the per-line hit counts.
+// every tags of attributes we don't read is omited so that we cannot fail on parsing them
 type coberturaReport struct {
 	XMLName  xml.Name `xml:"coverage"`
 	Packages []struct {
@@ -27,7 +28,7 @@ type coberturaReport struct {
 func ParseCobertura(report io.Reader, filterFile func(filtepath string) bool) ([]models.Patch, error) {
 	var parsed coberturaReport
 	if err := xml.NewDecoder(report).Decode(&parsed); err != nil {
-		return nil, fmt.Errorf("cannot decode coverage report: %w", err)
+		return nil, fmt.Errorf("failed to decode coverage report: %w", err)
 	}
 	patchs := []models.Patch{}
 	for _, pkg := range parsed.Packages {

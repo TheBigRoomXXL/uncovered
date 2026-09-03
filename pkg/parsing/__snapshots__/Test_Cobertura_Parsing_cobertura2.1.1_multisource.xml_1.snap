@@ -1,0 +1,8 @@
+[]models.Patch{
+    {File:"test/AbstractClass_SampleImpl1.java", Start:8, End:12},
+    {File:"test/AbstractClass_SampleImpl2.java", Start:8, End:12},
+    {File:"test/Program.java", Start:2, End:2},
+    {File:"test/TestClass.java", Start:20, End:20},
+    {File:"test/TestClass.java", Start:28, End:34},
+    {File:"test/sub/Sub.java", Start:3, End:9},
+}

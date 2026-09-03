@@ -1,0 +1,17 @@
+[]models.Patch{
+    {File:"C:\\temp\\AbstractClass.cs", Start:26, End:32},
+    {File:"C:\\temp\\AbstractClass.cs", Start:45, End:51},
+    {File:"C:\\temp\\AnalyzerTestClass.cs", Start:8, End:44},
+    {File:"C:\\temp\\CodeContract_Contract.cs", Start:10, End:14},
+    {File:"C:\\temp\\GenericClass.cs", Start:12, End:14},
+    {File:"C:\\temp\\PartialClass.cs", Start:13, End:21},
+    {File:"C:\\temp\\PartialClass.cs", Start:30, End:32},
+    {File:"C:\\temp\\PartialClass2.cs", Start:13, End:15},
+    {File:"C:\\temp\\PartialClassWithAutoProperties2.cs", Start:8, End:8},
+    {File:"C:\\temp\\Program.cs", Start:44, End:46},
+    {File:"C:\\temp\\TestClass.cs", Start:23, End:25},
+    {File:"C:\\temp\\TestClass2.cs", Start:15, End:21},
+    {File:"C:\\temp\\TestClass2.cs", Start:36, End:39},
+    {File:"C:\\temp\\TestClass2.cs", Start:80, End:83},
+    {File:"C:\\temp\\TestClass.cs", Start:52, End:57},
+}

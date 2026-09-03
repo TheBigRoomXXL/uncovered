@@ -1,0 +1,21 @@
+<!-- Report from ReportGenerator by Daniel Palme. Licenced under Apache License Version 2.0, January 2004 -->
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<coverage line-rate="0.6648351648351648" branch-rate="0.22448979591836735" version="4.0.0.0" timestamp="1539803661">
+  <sources>
+    <source>C:\temp</source>
+  </sources>
+  <packages>
+    <package name="Test" line-rate="0.6648351648351648" branch-rate="0.22448979591836735" complexity="1.3076923076923077">
+      <classes>
+        <class name="Test.AbstractClass" filename="C:\temp\AbstractClass.cs" line-rate="1" branch-rate="0" complexity="1">
+          <methods>
+            <method name=".ctor" signature="System.Void )" line-rate="1" branch-rate="0">
+              <lines>
+              </lines>
+            </method>
+          </methods>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>
