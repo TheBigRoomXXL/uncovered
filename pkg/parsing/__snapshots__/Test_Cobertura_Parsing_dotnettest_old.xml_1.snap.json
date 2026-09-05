@@ -1,0 +1,154 @@
+[
+ {
+  "end": 32,
+  "file": "C:\\temp\\AbstractClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 26
+ },
+ {
+  "end": 51,
+  "file": "C:\\temp\\AbstractClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 45
+ },
+ {
+  "end": 44,
+  "file": "C:\\temp\\AnalyzerTestClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 8
+ },
+ {
+  "end": 9,
+  "file": "C:\\temp\\ClassWithExcludes.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 6
+ },
+ {
+  "end": 14,
+  "file": "C:\\temp\\CodeContract_Contract.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 10
+ },
+ {
+  "end": 14,
+  "file": "C:\\temp\\GenericClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 12
+ },
+ {
+  "end": 6,
+  "file": "C:\\temp\\NotMatchingFileName.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 6
+ },
+ {
+  "end": 21,
+  "file": "C:\\temp\\PartialClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 13
+ },
+ {
+  "end": 32,
+  "file": "C:\\temp\\PartialClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 30
+ },
+ {
+  "end": 15,
+  "file": "C:\\temp\\PartialClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 13
+ },
+ {
+  "end": 6,
+  "file": "C:\\temp\\PartialClassWithAutoProperties.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 6
+ },
+ {
+  "end": 8,
+  "file": "C:\\temp\\PartialClassWithAutoProperties2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 6
+ },
+ {
+  "end": 44,
+  "file": "C:\\temp\\Program.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 42
+ },
+ {
+  "end": 24,
+  "file": "C:\\temp\\TestClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 22
+ },
+ {
+  "end": 11,
+  "file": "C:\\temp\\TestClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 11
+ },
+ {
+  "end": 21,
+  "file": "C:\\temp\\TestClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 15
+ },
+ {
+  "end": 39,
+  "file": "C:\\temp\\TestClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 36
+ },
+ {
+  "end": 83,
+  "file": "C:\\temp\\TestClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 80
+ },
+ {
+  "end": 35,
+  "file": "C:\\temp\\TestClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 30
+ }
+]

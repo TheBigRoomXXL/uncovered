@@ -54,9 +54,9 @@ func Test_Cobertura_Parsing(t *testing.T) {
 	for filename, file := range ForFilesIn(t, DIR_REPORTS_COBERTURA) {
 		t.Run(filename, func(t *testing.T) {
 			result, err := ParseCobertura(file, FilterNothing)
-			assert.Nil(t, err)
 
-			snaps.MatchStandaloneSnapshot(t, result)
+			assert.Nil(t, err)
+			snaps.MatchStandaloneJSON(t, result)
 		})
 	}
 }

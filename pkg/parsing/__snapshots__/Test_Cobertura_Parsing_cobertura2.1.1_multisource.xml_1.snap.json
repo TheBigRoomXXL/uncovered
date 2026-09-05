@@ -1,0 +1,50 @@
+[
+ {
+  "end": 12,
+  "file": "test/AbstractClass_SampleImpl1.java",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 8
+ },
+ {
+  "end": 12,
+  "file": "test/AbstractClass_SampleImpl2.java",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 8
+ },
+ {
+  "end": 2,
+  "file": "test/Program.java",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 2
+ },
+ {
+  "end": 20,
+  "file": "test/TestClass.java",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 20
+ },
+ {
+  "end": 34,
+  "file": "test/TestClass.java",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 28
+ },
+ {
+  "end": 9,
+  "file": "test/sub/Sub.java",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 3
+ }
+]

@@ -1,0 +1,218 @@
+[
+ {
+  "end": 32,
+  "file": "AbstractClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 26
+ },
+ {
+  "end": 51,
+  "file": "AbstractClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 45
+ },
+ {
+  "end": 44,
+  "file": "AnalyzerTestClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 8
+ },
+ {
+  "end": 17,
+  "file": "AutoMapperExtensions.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 9
+ },
+ {
+  "end": 14,
+  "file": "CodeContract_Contract.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 10
+ },
+ {
+  "end": 15,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 9
+ },
+ {
+  "end": 35,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 34
+ },
+ {
+  "end": 44,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 42
+ },
+ {
+  "end": 39,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 38
+ },
+ {
+  "end": 49,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 47
+ },
+ {
+  "end": 56,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 55
+ },
+ {
+  "end": 65,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 63
+ },
+ {
+  "end": 60,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 59
+ },
+ {
+  "end": 24,
+  "file": "GenericAsyncClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 22
+ },
+ {
+  "end": 14,
+  "file": "GenericClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 12
+ },
+ {
+  "end": 21,
+  "file": "PartialClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 13
+ },
+ {
+  "end": 32,
+  "file": "PartialClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 30
+ },
+ {
+  "end": 15,
+  "file": "PartialClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 13
+ },
+ {
+  "end": 8,
+  "file": "PartialClassWithAutoProperties2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 8
+ },
+ {
+  "end": 46,
+  "file": "Program.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 44
+ },
+ {
+  "end": 26,
+  "file": "TestClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 24
+ },
+ {
+  "end": 54,
+  "file": "TestClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 52
+ },
+ {
+  "end": 69,
+  "file": "TestClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 64
+ },
+ {
+  "end": 59,
+  "file": "TestClass.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 57
+ },
+ {
+  "end": 21,
+  "file": "TestClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 15
+ },
+ {
+  "end": 39,
+  "file": "TestClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 36
+ },
+ {
+  "end": 83,
+  "file": "TestClass2.cs",
+  "source": "",
+  "source_after": "",
+  "source_before": "",
+  "start": 80
+ }
+]

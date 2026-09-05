@@ -1,7 +1,0 @@
-[]models.Patch{
-    {File:"cli/main.go", Start:16, End:28},
-    {File:"cli/main.go", Start:32, End:69},
-    {File:"main.go", Start:16, End:42},
-    {File:"pkg/parsing/cobertura.go", Start:27, End:77},
-    {File:"pkg/rendering/terminal.go", Start:24, End:67},
-}
