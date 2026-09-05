@@ -2,7 +2,10 @@ package models
 
 // Represent a continuous sequence of source code
 type Patch struct {
-	File  string
-	Start int
-	End   int
+	File         string
+	Start        int
+	End          int
+	Source       string
+	SourceBefore string
+	SourceAfter  string
 }
