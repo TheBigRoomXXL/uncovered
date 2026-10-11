@@ -8,7 +8,7 @@ import (
 
 // ParseSources fills the source and its surrounding context of every patch
 func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Patch {
-	models.PreCondition(contextSize >= 0, "contexe size must be positive")
+	models.PreCondition(contextSize >= 0, "contex size must be positive")
 
 	// Sorting ensure we process patchs file by file and only increase line number
 	SortPatch(patchs)

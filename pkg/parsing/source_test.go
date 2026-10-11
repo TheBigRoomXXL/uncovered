@@ -174,7 +174,7 @@ func TestParseSourcesPanicOnColidingPatchs(t *testing.T) {
 		},
 	}
 
-	assert.Panics(t, func() {
+	models.AssertViolationKind(t, models.KindPreCondition, func() {
 		ParseSources(mockFS, patchs, 1)
 	})
 }
@@ -190,7 +190,7 @@ func TestParseSourcesPanicOnEmptyPatchs(t *testing.T) {
 		},
 	}
 
-	assert.Panics(t, func() {
+	models.AssertViolationKind(t, models.KindPreCondition, func() {
 		ParseSources(mockFS, patchs, 1)
 	})
 }
@@ -206,7 +206,7 @@ func TestParseSourcesPanicOnNegativeContextSize(t *testing.T) {
 		},
 	}
 
-	assert.Panics(t, func() {
+	models.AssertViolationKind(t, models.KindPreCondition, func() {
 		ParseSources(mockFS, patchs, -1)
 	})
 }

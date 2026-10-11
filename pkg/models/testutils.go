@@ -1,11 +1,14 @@
 package models
 
-import "pgregory.net/rapid"
+import (
+	"github.com/stretchr/testify/assert"
+	"pgregory.net/rapid"
+)
 
 type T interface {
 	// Cleanup(func())
 	// Error(args ...interface{})
-	// Errorf(format string, args ...interface{})
+	Errorf(format string, args ...interface{})
 	// Fail()
 	// FailNow()
 	// Failed() bool
@@ -34,3 +37,25 @@ var PatchGenerator = rapid.Custom(func(t *rapid.T) Patch {
 		End:   end,
 	}
 })
+
+func AssertViolation(t T, f func()) {
+	t.Helper()
+	defer func() {
+		r := recover()
+		_, ok := r.(*Violation)
+		assert.Truef(t, ok, "expected *models.Violation panic, got %#v", r)
+	}()
+	f()
+}
+
+func AssertViolationKind(t T, kind ContractKind, f func()) {
+	t.Helper()
+	defer func() {
+		r := recover()
+		v, ok := r.(*Violation)
+		if assert.Truef(t, ok, "expected *models.Violation panic, got %#v", r) {
+			assert.Equal(t, kind, v.Kind, v.Msg)
+		}
+	}()
+	f()
+}
