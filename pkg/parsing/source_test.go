@@ -194,3 +194,19 @@ func TestParseSourcesPanicOnEmptyPatchs(t *testing.T) {
 		ParseSources(mockFS, patchs, 1)
 	})
 }
+
+func TestParseSourcesPanicOnNegativeContextSize(t *testing.T) {
+	// Start is greater than End
+	// We should detect the malformation and panic
+	patchs := []models.Patch{
+		{
+			File:  "fixture.go",
+			Start: 5,
+			End:   4,
+		},
+	}
+
+	assert.Panics(t, func() {
+		ParseSources(mockFS, patchs, -1)
+	})
+}
