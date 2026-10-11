@@ -8,8 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TODO: test multi file ParseSources
-
 var mockFS = fstest.MapFS{
 	"fixture.go": &fstest.MapFile{
 		Data: []byte(`1 blablabla
