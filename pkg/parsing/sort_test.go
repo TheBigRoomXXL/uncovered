@@ -33,6 +33,7 @@ func AssertPatchsOrder(t models.T, patchs []models.Patch) {
 }
 
 func Test_SortPatchs(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name   string
 		patchs []models.Patch
@@ -88,6 +89,7 @@ func Test_SortPatchs(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
 			result := SortPatch(tc.patchs)
 
 			assert.Len(t, result, len(tc.patchs))
@@ -97,6 +99,7 @@ func Test_SortPatchs(t *testing.T) {
 }
 
 func Test_SortPatchs_PBT(t *testing.T) {
+	t.Parallel()
 	rapid.Check(t, func(t *rapid.T) {
 		patchs := rapid.SliceOf(models.PatchGenerator).Draw(t, "patchs")
 

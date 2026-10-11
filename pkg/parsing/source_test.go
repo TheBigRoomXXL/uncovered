@@ -106,6 +106,7 @@ func TestParseSources(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
 			results := ParseSources(mockFS, []models.Patch{tc.patch}, tc.contextSize)
 			assert.Equal(t, len(results), 1)
 			assert.Equal(t, results[0].File, tc.patch.File)
@@ -120,6 +121,7 @@ func TestParseSources(t *testing.T) {
 }
 
 func TestParseSourcesContextOverlap(t *testing.T) {
+	t.Parallel()
 
 	patchs := []models.Patch{
 		{
@@ -160,6 +162,7 @@ func TestParseSourcesContextOverlap(t *testing.T) {
 }
 
 func TestParseSourcesPanicOnColidingPatchs(t *testing.T) {
+	t.Parallel()
 	// The following patch share the line 4. They should have been merge instead.
 	// We should detect the malformation and panic
 	patchs := []models.Patch{
@@ -180,6 +183,7 @@ func TestParseSourcesPanicOnColidingPatchs(t *testing.T) {
 }
 
 func TestParseSourcesPanicOnEmptyPatchs(t *testing.T) {
+	t.Parallel()
 	// Start is greater than End
 	// We should detect the malformation and panic
 	patchs := []models.Patch{
@@ -196,6 +200,7 @@ func TestParseSourcesPanicOnEmptyPatchs(t *testing.T) {
 }
 
 func TestParseSourcesPanicOnNegativeContextSize(t *testing.T) {
+	t.Parallel()
 	// Start is greater than End
 	// We should detect the malformation and panic
 	patchs := []models.Patch{

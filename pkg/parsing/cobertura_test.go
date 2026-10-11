@@ -14,7 +14,7 @@ const DIR_TEST_DATA = "../../testdata/"
 const DIR_REPORTS_COBERTURA = DIR_TEST_DATA + "reports/cobertura"
 
 // ForFilesIn yields the filename and an opened *os.File for each non-directory entry in dirPath.
-// The yielded file is automatically closed after each iteration step.
+// The yielded file is closed when the test (including parallel subtests) completes.
 // Does not recurse
 func ForFilesIn(t *testing.T, dirPath string) iter.Seq2[string, *os.File] {
 	t.Helper()
@@ -36,7 +36,7 @@ func ForFilesIn(t *testing.T, dirPath string) iter.Seq2[string, *os.File] {
 			if err != nil {
 				continue
 			}
-			defer file.Close()
+			t.Cleanup(func() { file.Close() })
 
 			ok := yield(entry.Name(), file)
 			if !ok {
@@ -51,8 +51,10 @@ func FilterNothing(path string) bool {
 }
 
 func Test_Cobertura_Parsing(t *testing.T) {
+	t.Parallel()
 	for filename, file := range ForFilesIn(t, DIR_REPORTS_COBERTURA) {
 		t.Run(filename, func(t *testing.T) {
+			t.Parallel()
 			result, err := ParseCobertura(file, FilterNothing)
 
 			assert.Nil(t, err)

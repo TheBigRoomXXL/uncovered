@@ -9,6 +9,7 @@ import (
 )
 
 func Test_FilterForFiles(t *testing.T) {
+	t.Parallel()
 	var tests = []struct {
 		name, filepath     string
 		includes, excludes []string
@@ -186,6 +187,7 @@ func Test_FilterForFiles(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
 			filefunc := FilterForFiles(tc.includes, tc.excludes)
 
 			result := filefunc(tc.filepath)
@@ -195,6 +197,7 @@ func Test_FilterForFiles(t *testing.T) {
 }
 
 func Test_FilterForFiles_PBT(t *testing.T) {
+	t.Parallel()
 	rapid.Check(t, func(t *rapid.T) {
 
 		filepath := rapid.String().Draw(t, "filepath")
