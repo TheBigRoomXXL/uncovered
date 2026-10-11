@@ -20,6 +20,7 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 	for i := range len(patchs) {
 		// We mutate the array directly, no copy
 		patch := &patchs[i]
+		models.PreConditionf(patch.Start <= patch.End, "patch has an empty range: %s:%d-%d", patch.File, patch.Start, patch.End)
 
 		// In case of error on the file, we skip every patch in that file
 		if goToNextFile && filepath == patch.File {
@@ -44,6 +45,8 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 			goToNextFile = false
 		}
 
+		models.Assertf(lineNumber < patch.Start, "line number greater than current patch start: %d > %d", lineNumber, patch.Start)
+
 		// Iterate over lines until we reach the part that interest us
 		for scanner.Scan() {
 			lineNumber += 1
@@ -52,12 +55,20 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 				continue
 			} else if lineNumber < patch.Start {
 				patch.SourceBefore = append(patch.SourceBefore, scanner.Text())
-			} else if lineNumber <= patch.End {
+			} else if lineNumber < patch.End {
 				patch.Source = append(patch.Source, scanner.Text())
-			} else if lineNumber <= patch.End+contextSize {
+			} else if lineNumber == patch.End {
+				patch.Source = append(patch.Source, scanner.Text())
+				if contextSize == 0 {
+					break // Process next patch
+				}
+			} else if lineNumber < patch.End+contextSize {
 				patch.SourceAfter = append(patch.SourceAfter, scanner.Text())
-			} else {
+			} else if lineNumber == patch.End+contextSize {
+				patch.SourceAfter = append(patch.SourceAfter, scanner.Text())
 				break // Process next patch
+			} else {
+				models.Unreachable("Current line should not be greater than patch.End+ContextSize")
 			}
 		}
 
