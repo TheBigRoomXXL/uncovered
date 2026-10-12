@@ -29,6 +29,12 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 					patchs[high-1].File, patchs[high-1].Start, patchs[high-1].End,
 					patchs[high].File, patchs[high].Start, patchs[high].End,
 				)
+				models.PreConditionf(
+					patchs[high-1].End+1 != patchs[high].Start,
+					"patchs adjacent, they should have been merged: %s:%d-%d and %s:%d-%d",
+					patchs[high-1].File, patchs[high-1].Start, patchs[high-1].End,
+					patchs[high].File, patchs[high].Start, patchs[high].End,
+				)
 			}
 			high++
 		}

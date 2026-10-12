@@ -182,6 +182,27 @@ func TestParseSourcesPanicOnColidingPatchs(t *testing.T) {
 	})
 }
 
+func TestParseSourcesPanicOnAdjacentPatchs(t *testing.T) {
+	t.Parallel()
+	// The following patch share the line 4. They should have been merge instead.
+	// We should detect the malformation and panic
+	patchs := []models.Patch{
+		{
+			File:  "fixture.go",
+			Start: 3,
+			End:   3,
+		}, {
+			File:  "fixture.go",
+			Start: 4,
+			End:   4,
+		},
+	}
+
+	models.AssertViolationKind(t, models.KindPreCondition, func() {
+		ParseSources(mockFS, patchs, 1)
+	})
+}
+
 func TestParseSourcesPanicOnEmptyPatchs(t *testing.T) {
 	t.Parallel()
 	// Start is greater than End

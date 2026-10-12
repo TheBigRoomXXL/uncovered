@@ -1,5 +1,6 @@
-[ ] Patch: replace Start and End types with uint. 
-[ ] source.go:  change context size to uint
+[ ] Patch: assert Start and End > 0 
+[X] source.go:  assert context size is > 0
+[ ] source.go:  test emtpy patch list 
 [ ] source.go:  test multi file ParseSources
 [ ] source.go:  test absolute path to file
 [ ] source.go:  test relative path to file (multiple variation)
@@ -17,8 +18,6 @@
 [ ] source.go:  test Patch covering the whole file exactly.
 [ ] source.go:  test contextSize clamped at both ends simultaneously (file shorter than 2*contextSize). 
 [ ] source.go:  test Monotonicity: changine contextSize must never change the source (nice PBT property).
-[ ] source.go:  test emtpy patch list 
-[ ] source.go:  test emtpy patch list 
 [ ] source.go:  invariance: adjacent patches (1-2 then 3-3) is not legal, should be treated like overlaping patchs
 [ ] source.go:  invariance: validate that patch start are properly sorted as HEAD advance
 [ ] source.go:  invariance: test that patch.Start >= 1 (line count start at 1, not 0)
