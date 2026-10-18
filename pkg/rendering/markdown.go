@@ -9,10 +9,14 @@ import (
 // Display a patch a markdown
 func RenderPatchMarkdown(patch shared.Patch) string {
 	var result strings.Builder
-	result.WriteString(fmt.Sprintf("%s:%d", patch.File, patch.Start))
-	if patch.Start != patch.End {
-		result.WriteString(fmt.Sprintf("-%d", patch.End))
+	result.WriteString(patch.Identifier())
+	result.WriteString("\n")
+
+	if patch.SourceError != nil {
+		result.WriteString(fmt.Sprintf("error retriving source: %s\n", patch.SourceError))
+		return result.String()
 	}
+
 	result.WriteString("\n```diff\n")
 	for _, lineBefore := range patch.SourceBefore {
 		result.WriteString(fmt.Sprintf("  %s\n", lineBefore))

@@ -34,6 +34,7 @@ func main() {
 		log.Fatal("failed to parse report: ", err)
 	}
 	for _, patch := range patchs {
+		// TODO: add color to config, based on env.
 		fmt.Println(rendering.RenderPatchText(patch, true))
 	}
 }

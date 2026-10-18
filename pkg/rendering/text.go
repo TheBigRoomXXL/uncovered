@@ -9,18 +9,21 @@ import (
 type ANSI struct {
 	Reset  string
 	Orange string
+	Red    string
 	Dim    string
 }
 
 var ANSIColors = ANSI{
 	Reset:  "\033[0m",
 	Orange: "\033[38;5;208m",
+	Red:    "\033[31m",
 	Dim:    "\033[38;5;244m",
 }
 
 var ANSINone = ANSI{
 	Reset:  "",
 	Orange: "",
+	Red:    "",
 	Dim:    "",
 }
 
@@ -38,11 +41,14 @@ func RenderPatchText(patch shared.Patch, color bool) string {
 	width := countDigits(patch.End + len(patch.SourceAfter))
 
 	var result strings.Builder
-	result.WriteString(fmt.Sprintf("%s:%d", patch.File, patch.Start))
-	if patch.Start != patch.End {
-		result.WriteString(fmt.Sprintf("-%d", patch.End))
-	}
+	result.WriteString(patch.Identifier())
 	result.WriteString("\n")
+
+	if patch.SourceError != nil {
+		result.WriteString(fmt.Sprintf("%serror retriving source: %s%s\n", ansi.Red, patch.SourceError, ansi.Reset))
+		return result.String()
+	}
+
 	for i, lineBefore := range patch.SourceBefore {
 		lineNo := patch.Start - len(patch.SourceBefore) + i
 		result.WriteString(fmt.Sprintf("%s%*d | %s%s%s\n", ansi.Dim, width, lineNo, pad, lineBefore, ansi.Reset))
