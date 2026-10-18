@@ -4,6 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 	"uncovered/pkg/models"
@@ -12,6 +13,13 @@ import (
 // stringList collects a repeatable string option: every occurrence of the
 // flag appends instead of overwriting the previous value.
 type stringList []string
+
+var DefaultConfig = &models.Config{
+	Includes:    []string{},
+	Excludes:    []string{},
+	ContextSize: 3,
+	Base:        "cwd",
+}
 
 func (list *stringList) String() string {
 	if list == nil {
@@ -31,11 +39,13 @@ func (list *stringList) Set(value string) error {
 // Build the config from cli options
 func NewConfigFromCLI(args []string) (*models.Config, error) {
 	// Default values
-	config := &models.Config{
-		Includes:    []string{},
-		Excludes:    []string{},
-		ContextSize: 3,
+	config := DefaultConfig
+
+	cwd, err := os.Getwd()
+	if err != nil {
+		return nil, err
 	}
+	config.Base = cwd
 
 	flags := flag.NewFlagSet(args[0], flag.ContinueOnError)
 	flags.Usage = func() {
@@ -44,7 +54,8 @@ func NewConfigFromCLI(args []string) (*models.Config, error) {
 	}
 	flags.Var((*stringList)(&config.Includes), "include", "only report on this file; repeat for several files")
 	flags.Var((*stringList)(&config.Excludes), "exclude", "never report on this file; repeat for several files")
-	flags.IntVar(&config.ContextSize, "context-size", 3, "how many line to display before and after each patch")
+	flags.IntVar(&config.ContextSize, "context-size", config.ContextSize, "how many line to display before and after each patch")
+	flags.StringVar(&config.Base, "root", config.Base, "base used for relative paths in the report")
 
 	if err := flags.Parse(args[1:]); err != nil {
 		return nil, err

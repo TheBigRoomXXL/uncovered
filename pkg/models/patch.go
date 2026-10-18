@@ -3,6 +3,7 @@ package models
 // Represent a continuous sequence of source code
 type Patch struct {
 	File         string   `json:"file"`
+	FileAbs      string   `json:"file_abs"`
 	Start        int      `json:"start"` // Inclusive
 	End          int      `json:"end"`   // Inclusive
 	Source       []string `json:"source"`

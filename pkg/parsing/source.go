@@ -7,6 +7,7 @@ import (
 )
 
 // ParseSources fills the source and its surrounding context of every patch
+// TODO: addd suport for filterPatchs
 func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Patch {
 	models.PreCondition(contextSize >= 0, "contex size must be positive")
 
@@ -16,24 +17,24 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 	for low := 0; low < len(patchs); {
 		// Delimit the run of patchs belownging to the same file
 		high := low
-		for high < len(patchs) && patchs[high].File == patchs[low].File {
+		for high < len(patchs) && patchs[high].FileAbs == patchs[low].FileAbs {
 			models.PreConditionf(
 				patchs[high].Start <= patchs[high].End,
 				"patch has an empty range: %s:%d-%d",
-				patchs[high].File, patchs[high].Start, patchs[high].End,
+				patchs[high].FileAbs, patchs[high].Start, patchs[high].End,
 			)
 			if high > low {
 				models.PreConditionf(
 					patchs[high-1].End < patchs[high].Start,
 					"patchs overlap, they should have been merged: %s:%d-%d and %s:%d-%d",
-					patchs[high-1].File, patchs[high-1].Start, patchs[high-1].End,
-					patchs[high].File, patchs[high].Start, patchs[high].End,
+					patchs[high-1].FileAbs, patchs[high-1].Start, patchs[high-1].End,
+					patchs[high].FileAbs, patchs[high].Start, patchs[high].End,
 				)
 				models.PreConditionf(
 					patchs[high-1].End+1 != patchs[high].Start,
 					"patchs adjacent, they should have been merged: %s:%d-%d and %s:%d-%d",
-					patchs[high-1].File, patchs[high-1].Start, patchs[high-1].End,
-					patchs[high].File, patchs[high].Start, patchs[high].End,
+					patchs[high-1].FileAbs, patchs[high-1].Start, patchs[high-1].End,
+					patchs[high].FileAbs, patchs[high].Start, patchs[high].End,
 				)
 			}
 			high++
@@ -51,7 +52,7 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 func parseSourcesFile(sys fs.FS, patchs []models.Patch, contextSize int) {
 	models.PreCondition(len(patchs) > 0, "cannot process empty list")
 
-	file, err := sys.Open(patchs[0].File)
+	file, err := sys.Open(patchs[0].FileAbs)
 	if err != nil {
 		setSourceError(patchs, err)
 		return

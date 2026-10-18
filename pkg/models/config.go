@@ -5,4 +5,5 @@ type Config struct {
 	Includes    []string
 	Excludes    []string
 	ContextSize int
+	Base        string
 }

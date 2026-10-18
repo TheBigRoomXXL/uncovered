@@ -1,14 +1,13 @@
 package filtering
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"pgregory.net/rapid"
 )
 
-func Test_FilterForFiles(t *testing.T) {
+func Test_Filter(t *testing.T) {
 	t.Parallel()
 	var tests = []struct {
 		name, filepath     string
@@ -188,7 +187,7 @@ func Test_FilterForFiles(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
-			filefunc := FilterForFiles(tc.includes, tc.excludes)
+			filefunc := Filter(tc.includes, tc.excludes)
 
 			result := filefunc(tc.filepath)
 			assert.Equal(t, tc.expected, result)
@@ -196,7 +195,7 @@ func Test_FilterForFiles(t *testing.T) {
 	}
 }
 
-func Test_FilterForFiles_PBT(t *testing.T) {
+func Test_Filter_PBT(t *testing.T) {
 	t.Parallel()
 	rapid.Check(t, func(t *rapid.T) {
 
@@ -204,9 +203,7 @@ func Test_FilterForFiles_PBT(t *testing.T) {
 		includes := rapid.SliceOf(rapid.String()).Draw(t, "includes")
 		excludes := rapid.SliceOf(rapid.String()).Draw(t, "excludes")
 
-		fmt.Println("filepath", filepath, "includes", includes, "excludes", excludes)
-
-		filefunc := FilterForFiles(includes, excludes)
+		filefunc := Filter(includes, excludes)
 
 		assert.NotPanics(t, func() { filefunc(filepath) })
 

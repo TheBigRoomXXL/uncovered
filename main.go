@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"errors"
 	"flag"
 	"fmt"
@@ -29,15 +28,12 @@ func main() {
 	}
 	defer report.Close()
 
-	fileFilter := filtering.FilterForFiles(config.Includes, config.Excludes)
-	untested, err := parsing.ParseCobertura(report, fileFilter)
+	filter := filtering.Filter(config.Includes, config.Excludes)
+	patchs, err := parsing.Parse(report, config.Base, config.ContextSize, filter)
 	if err != nil {
 		log.Fatal("failed to parse report: ", err)
 	}
-
-	out := bufio.NewWriter(os.Stdout)
-	defer out.Flush()
-	for _, patch := range untested {
-		fmt.Fprintln(out, rendering.RenderTerminal(patch, config.ContextSize))
+	for _, patch := range patchs {
+		fmt.Println(rendering.RenderPatchText(patch, true))
 	}
 }

@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-func FilterForFiles(includes, excludes []string) func(filepath string) bool {
+func Filter(includes, excludes []string) func(filepath string) bool {
 	return func(filepath string) bool {
 		if len(includes) > 0 && !matchOneOf(filepath, includes) {
 			return false
@@ -18,6 +18,7 @@ func FilterForFiles(includes, excludes []string) func(filepath string) bool {
 
 func matchOneOf(needle string, haystack []string) bool {
 	for _, substr := range haystack {
+		// TODO: add accent insencitivity
 		if strings.Contains(needle, substr) {
 			return true
 		}
