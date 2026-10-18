@@ -3,9 +3,9 @@ module uncovered
 go 1.26.5
 
 require (
-	github.com/gkampitakis/go-snaps v0.5.23
-	github.com/stretchr/testify v1.12.1
-	pgregory.net/rapid v1.3.0
+	github.com/gkampitakis/go-snaps v0.5.23 // test dependendcies
+	github.com/stretchr/testify v1.12.1 // test dependendcies
+	pgregory.net/rapid v1.3.0 // test dependendcies
 )
 
 require (
