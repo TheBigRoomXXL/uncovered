@@ -1,4 +1,4 @@
-package models
+package shared
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -43,7 +43,7 @@ func AssertViolation(t T, f func()) {
 	defer func() {
 		r := recover()
 		_, ok := r.(*Violation)
-		assert.Truef(t, ok, "expected *models.Violation panic, got %#v", r)
+		assert.Truef(t, ok, "expected *shared.Violation panic, got %#v", r)
 	}()
 	f()
 }
@@ -53,7 +53,7 @@ func AssertViolationKind(t T, kind ContractKind, f func()) {
 	defer func() {
 		r := recover()
 		v, ok := r.(*Violation)
-		if assert.Truef(t, ok, "expected *models.Violation panic, got %#v", r) {
+		if assert.Truef(t, ok, "expected *shared.Violation panic, got %#v", r) {
 			assert.Equal(t, kind, v.Kind, v.Msg)
 		}
 	}()

@@ -2,13 +2,13 @@ package parsing
 
 import (
 	"testing"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 
 	"github.com/stretchr/testify/assert"
 	"pgregory.net/rapid"
 )
 
-func AssertPatchsOrder(t models.T, patchs []models.Patch) {
+func AssertPatchsOrder(t shared.T, patchs []shared.Patch) {
 	t.Helper()
 
 	if len(patchs) <= 1 {
@@ -36,27 +36,27 @@ func Test_SortPatchs(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
 		name   string
-		patchs []models.Patch
+		patchs []shared.Patch
 	}{
 		{
 			name:   "0 patch",
-			patchs: []models.Patch{},
+			patchs: []shared.Patch{},
 		},
 		{
 			name:   "1 patch",
-			patchs: []models.Patch{{File: "truc.go", Start: 10, End: 12}},
+			patchs: []shared.Patch{{File: "truc.go", Start: 10, End: 12}},
 		},
 		{
 			name:   "unsorted by name",
-			patchs: []models.Patch{{File: "truc.go", Start: 10, End: 12}, {File: "bidule.go", Start: 10, End: 12}},
+			patchs: []shared.Patch{{File: "truc.go", Start: 10, End: 12}, {File: "bidule.go", Start: 10, End: 12}},
 		},
 		{
 			name:   "unsorted by start",
-			patchs: []models.Patch{{File: "truc.go", Start: 10, End: 12}, {File: "truc.go", Start: 7, End: 8}},
+			patchs: []shared.Patch{{File: "truc.go", Start: 10, End: 12}, {File: "truc.go", Start: 7, End: 8}},
 		},
 		{
 			name: "already sorted list",
-			patchs: []models.Patch{
+			patchs: []shared.Patch{
 				{File: "a.go", Start: 1, End: 5},
 				{File: "a.go", Start: 10, End: 15},
 				{File: "b.go", Start: 2, End: 4},
@@ -64,7 +64,7 @@ func Test_SortPatchs(t *testing.T) {
 		},
 		{
 			name: "multiple files with mixed start positions",
-			patchs: []models.Patch{
+			patchs: []shared.Patch{
 				{File: "c.go", Start: 5, End: 10},
 				{File: "a.go", Start: 20, End: 25},
 				{File: "a.go", Start: 5, End: 10},
@@ -73,14 +73,14 @@ func Test_SortPatchs(t *testing.T) {
 		},
 		{
 			name: "same start lines across different files",
-			patchs: []models.Patch{
+			patchs: []shared.Patch{
 				{File: "zebra.go", Start: 10, End: 20},
 				{File: "alpha.go", Start: 10, End: 15},
 			},
 		},
 		{
 			name: "empty string filenames",
-			patchs: []models.Patch{
+			patchs: []shared.Patch{
 				{File: "b.go", Start: 10, End: 12},
 				{File: "", Start: 5, End: 8},
 			},
@@ -101,7 +101,7 @@ func Test_SortPatchs(t *testing.T) {
 func Test_SortPatchs_PBT(t *testing.T) {
 	t.Parallel()
 	rapid.Check(t, func(t *rapid.T) {
-		patchs := rapid.SliceOf(models.PatchGenerator).Draw(t, "patchs")
+		patchs := rapid.SliceOf(shared.PatchGenerator).Draw(t, "patchs")
 
 		result := SortPatch(patchs)
 		assert.Len(t, result, len(patchs))

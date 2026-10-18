@@ -2,13 +2,13 @@ package rendering
 
 import (
 	"testing"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestRenderPatchTextBasic(t *testing.T) {
-	p := models.Patch{
+	p := shared.Patch{
 		File:         "something.go",
 		Start:        10,
 		End:          10,
@@ -29,7 +29,7 @@ func TestRenderPatchTextBasic(t *testing.T) {
 }
 
 func TestRenderPatchTextWithColor(t *testing.T) {
-	p := models.Patch{
+	p := shared.Patch{
 		File:         "something.go",
 		Start:        10,
 		End:          10,

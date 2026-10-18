@@ -3,11 +3,11 @@ package rendering
 import (
 	"fmt"
 	"strings"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 )
 
 // Display a patch a markdown
-func RenderPatchMarkdown(patch models.Patch) string {
+func RenderPatchMarkdown(patch shared.Patch) string {
 	var result strings.Builder
 	result.WriteString(fmt.Sprintf("%s:%d", patch.File, patch.Start))
 	if patch.Start != patch.End {

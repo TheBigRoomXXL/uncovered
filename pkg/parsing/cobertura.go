@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"sort"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 )
 
 // coberturaReport mirrors the subset of the cobertura XML schema we need:
@@ -25,12 +25,12 @@ type coberturaReport struct {
 }
 
 // Parse a cobertura XMl coverage report to extract all untest code patchs
-func ParseCobertura(report io.Reader, filter func(filtepath string) bool) ([]models.Patch, error) {
+func ParseCobertura(report io.Reader, filter func(filtepath string) bool) ([]shared.Patch, error) {
 	var parsed coberturaReport
 	if err := xml.NewDecoder(report).Decode(&parsed); err != nil {
 		return nil, fmt.Errorf("failed to decode coverage report: %w", err)
 	}
-	patchs := []models.Patch{}
+	patchs := []shared.Patch{}
 	for _, pkg := range parsed.Packages {
 		for _, class := range pkg.Classes {
 			if !filter(class.Filename) {
@@ -54,7 +54,7 @@ func ParseCobertura(report io.Reader, filter func(filtepath string) bool) ([]mod
 			// Group consecutive uncovered lines. Line numbers missing from the
 			// report (blanks, comments, declarations) are not coverable, so they
 			// do not break a patch: a patch ends on the first covered line.
-			var current *models.Patch
+			var current *shared.Patch
 			for _, line := range lines {
 				if line.Hits > 0 {
 					if current != nil {
@@ -64,7 +64,7 @@ func ParseCobertura(report io.Reader, filter func(filtepath string) bool) ([]mod
 					continue
 				}
 				if current == nil {
-					current = &models.Patch{File: class.Filename, Start: line.Number, End: line.Number}
+					current = &shared.Patch{File: class.Filename, Start: line.Number, End: line.Number}
 				} else {
 					current.End = line.Number
 				}

@@ -5,10 +5,10 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 )
 
-func Parse(report io.Reader, base string, contextSize int, filterFile func(string) bool) ([]models.Patch, error) {
+func Parse(report io.Reader, base string, contextSize int, filterFile func(string) bool) ([]shared.Patch, error) {
 	patchs, err := ParseCobertura(report, filterFile)
 	if err != nil {
 		return nil, err
@@ -25,8 +25,8 @@ func Parse(report io.Reader, base string, contextSize int, filterFile func(strin
 
 // We fs.FS so all path must be relative to /
 // relative pass are interpelated to a "base" wich can be the cwd or a user inputed path
-func ComputePaths(patchs []models.Patch, base string) []models.Patch {
-	models.PreCondition(filepath.IsAbs(base), "base should be absolute")
+func ComputePaths(patchs []shared.Patch, base string) []shared.Patch {
+	shared.PreCondition(filepath.IsAbs(base), "base should be absolute")
 	for i := range patchs {
 		patchs[i].FileAbs = strings.TrimPrefix(toAbsolute(base, patchs[i].File), "/")
 	}

@@ -3,7 +3,7 @@ package parsing
 import (
 	"testing"
 	"testing/fstest"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -24,7 +24,7 @@ func TestParseSources(t *testing.T) {
 
 	testCases := []struct {
 		name         string
-		patch        models.Patch
+		patch        shared.Patch
 		contextSize  int
 		SourceBefore []string
 		Source       []string
@@ -32,7 +32,7 @@ func TestParseSources(t *testing.T) {
 	}{
 		{
 			name: "basic",
-			patch: models.Patch{
+			patch: shared.Patch{
 				File:  "fixture.go",
 				Start: 3,
 				End:   3,
@@ -44,7 +44,7 @@ func TestParseSources(t *testing.T) {
 		},
 		{
 			name: "no-context",
-			patch: models.Patch{
+			patch: shared.Patch{
 				File:  "fixture.go",
 				Start: 3,
 				End:   3,
@@ -56,7 +56,7 @@ func TestParseSources(t *testing.T) {
 		},
 		{
 			name: "multi-line-patch",
-			patch: models.Patch{
+			patch: shared.Patch{
 				File:  "fixture.go",
 				Start: 2,
 				End:   3,
@@ -68,7 +68,7 @@ func TestParseSources(t *testing.T) {
 		},
 		{
 			name: "first-line",
-			patch: models.Patch{
+			patch: shared.Patch{
 				File:  "fixture.go",
 				Start: 1,
 				End:   1,
@@ -80,7 +80,7 @@ func TestParseSources(t *testing.T) {
 		},
 		{
 			name: "last-line",
-			patch: models.Patch{
+			patch: shared.Patch{
 				File:  "fixture.go",
 				Start: 6,
 				End:   6,
@@ -92,7 +92,7 @@ func TestParseSources(t *testing.T) {
 		},
 		{
 			name: "context-bigger-than-file",
-			patch: models.Patch{
+			patch: shared.Patch{
 				File:  "fixture.go",
 				Start: 3,
 				End:   3,
@@ -107,7 +107,7 @@ func TestParseSources(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
-			results := ParseSources(mockFS, []models.Patch{tc.patch}, tc.contextSize)
+			results := ParseSources(mockFS, []shared.Patch{tc.patch}, tc.contextSize)
 			assert.Equal(t, len(results), 1)
 			assert.Equal(t, results[0].File, tc.patch.File)
 			assert.Equal(t, results[0].Start, tc.patch.Start)
@@ -123,7 +123,7 @@ func TestParseSources(t *testing.T) {
 func TestParseSourcesContextOverlap(t *testing.T) {
 	t.Parallel()
 
-	patchs := []models.Patch{
+	patchs := []shared.Patch{
 		{
 			File:  "fixture.go",
 			Start: 3,
@@ -140,7 +140,7 @@ func TestParseSourcesContextOverlap(t *testing.T) {
 
 	assert.Len(t, results, 2)
 
-	assert.Equal(t, results[0], models.Patch{
+	assert.Equal(t, results[0], shared.Patch{
 		File:         "fixture.go",
 		Start:        3,
 		End:          3,
@@ -150,7 +150,7 @@ func TestParseSourcesContextOverlap(t *testing.T) {
 		SourceError:  nil,
 	})
 
-	assert.Equal(t, results[1], models.Patch{
+	assert.Equal(t, results[1], shared.Patch{
 		File:         "fixture.go",
 		Start:        5,
 		End:          5,
@@ -165,7 +165,7 @@ func TestParseSourcesPanicOnColidingPatchs(t *testing.T) {
 	t.Parallel()
 	// The following patch share the line 4. They should have been merge instead.
 	// We should detect the malformation and panic
-	patchs := []models.Patch{
+	patchs := []shared.Patch{
 		{
 			File:  "fixture.go",
 			Start: 3,
@@ -177,7 +177,7 @@ func TestParseSourcesPanicOnColidingPatchs(t *testing.T) {
 		},
 	}
 
-	models.AssertViolationKind(t, models.KindPreCondition, func() {
+	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
 		ParseSources(mockFS, patchs, 1)
 	})
 }
@@ -186,7 +186,7 @@ func TestParseSourcesPanicOnAdjacentPatchs(t *testing.T) {
 	t.Parallel()
 	// The following patch share the line 4. They should have been merge instead.
 	// We should detect the malformation and panic
-	patchs := []models.Patch{
+	patchs := []shared.Patch{
 		{
 			File:  "fixture.go",
 			Start: 3,
@@ -198,7 +198,7 @@ func TestParseSourcesPanicOnAdjacentPatchs(t *testing.T) {
 		},
 	}
 
-	models.AssertViolationKind(t, models.KindPreCondition, func() {
+	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
 		ParseSources(mockFS, patchs, 1)
 	})
 }
@@ -207,7 +207,7 @@ func TestParseSourcesPanicOnEmptyPatchs(t *testing.T) {
 	t.Parallel()
 	// Start is greater than End
 	// We should detect the malformation and panic
-	patchs := []models.Patch{
+	patchs := []shared.Patch{
 		{
 			File:  "fixture.go",
 			Start: 5,
@@ -215,7 +215,7 @@ func TestParseSourcesPanicOnEmptyPatchs(t *testing.T) {
 		},
 	}
 
-	models.AssertViolationKind(t, models.KindPreCondition, func() {
+	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
 		ParseSources(mockFS, patchs, 1)
 	})
 }
@@ -224,7 +224,7 @@ func TestParseSourcesPanicOnNegativeContextSize(t *testing.T) {
 	t.Parallel()
 	// Start is greater than End
 	// We should detect the malformation and panic
-	patchs := []models.Patch{
+	patchs := []shared.Patch{
 		{
 			File:  "fixture.go",
 			Start: 5,
@@ -232,7 +232,7 @@ func TestParseSourcesPanicOnNegativeContextSize(t *testing.T) {
 		},
 	}
 
-	models.AssertViolationKind(t, models.KindPreCondition, func() {
+	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
 		ParseSources(mockFS, patchs, -1)
 	})
 }

@@ -1,4 +1,4 @@
-package models
+package shared
 
 type Config struct {
 	ReportPath  string

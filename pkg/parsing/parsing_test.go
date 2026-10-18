@@ -2,7 +2,7 @@ package parsing
 
 import (
 	"testing"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -26,7 +26,7 @@ func TestComputePaths(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			patchs := []models.Patch{{File: tc.file}}
+			patchs := []shared.Patch{{File: tc.file}}
 			result := ComputePaths(patchs, tc.base)
 			assert.Equal(t, tc.file, result[0].File)
 			assert.Equal(t, tc.expected, result[0].FileAbs)
@@ -35,28 +35,28 @@ func TestComputePaths(t *testing.T) {
 }
 
 func TestComputePathsMultiplePatchs(t *testing.T) {
-	patchs := []models.Patch{
+	patchs := []shared.Patch{
 		{File: "a.go", Start: 1, End: 2},
 		{File: "/abs/b.go", Start: 3, End: 4},
 	}
 
 	result := ComputePaths(patchs, "/base")
 
-	assert.Equal(t, []models.Patch{
+	assert.Equal(t, []shared.Patch{
 		{File: "a.go", FileAbs: "base/a.go", Start: 1, End: 2},
 		{File: "/abs/b.go", FileAbs: "abs/b.go", Start: 3, End: 4},
 	}, result)
 }
 
 func TestComputePathsEmpty(t *testing.T) {
-	assert.Empty(t, ComputePaths([]models.Patch{}, "/base"))
+	assert.Empty(t, ComputePaths([]shared.Patch{}, "/base"))
 	assert.Empty(t, ComputePaths(nil, "/base"))
 }
 
 func TestComputePathsViolation(t *testing.T) {
 	t.Parallel()
 
-	models.AssertViolationKind(t, models.KindPreCondition, func() {
-		ComputePaths([]models.Patch{}, "./someting/relative")
+	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
+		ComputePaths([]shared.Patch{}, "./someting/relative")
 	})
 }

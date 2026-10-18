@@ -3,7 +3,7 @@ package rendering
 import (
 	"fmt"
 	"strings"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 )
 
 type ANSI struct {
@@ -25,7 +25,7 @@ var ANSINone = ANSI{
 }
 
 // Display a patch a text, color enable ANSI coloring
-func RenderPatchText(patch models.Patch, color bool) string {
+func RenderPatchText(patch shared.Patch, color bool) string {
 	ansi := ANSINone
 	hint := "✗ "
 	pad := "  "

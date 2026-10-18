@@ -1,4 +1,4 @@
-package models
+package shared
 
 // Represent a continuous sequence of source code
 type Patch struct {

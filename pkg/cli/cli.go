@@ -8,14 +8,14 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 )
 
 // stringList collects a repeatable string option: every occurrence of the
 // flag appends instead of overwriting the previous value.
 type stringList []string
 
-var DefaultConfig = &models.Config{
+var DefaultConfig = &shared.Config{
 	Includes:    []string{},
 	Excludes:    []string{},
 	ContextSize: 3,
@@ -38,7 +38,7 @@ func (list *stringList) Set(value string) error {
 }
 
 // Build the config from cli options
-func NewConfigFromCLI(args []string) (*models.Config, error) {
+func NewConfigFromCLI(args []string) (*shared.Config, error) {
 	// Default values
 	config := DefaultConfig
 

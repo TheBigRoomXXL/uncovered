@@ -3,13 +3,13 @@ package parsing
 import (
 	"bufio"
 	"io/fs"
-	"uncovered/pkg/models"
+	"uncovered/pkg/shared"
 )
 
 // ParseSources fills the source and its surrounding context of every patch
 // TODO: addd suport for filterPatchs
-func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Patch {
-	models.PreCondition(contextSize >= 0, "contex size must be positive")
+func ParseSources(sys fs.FS, patchs []shared.Patch, contextSize int) []shared.Patch {
+	shared.PreCondition(contextSize >= 0, "contex size must be positive")
 
 	// Sorting ensure we process patchs file by file and only increase line number
 	SortPatch(patchs)
@@ -18,19 +18,19 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 		// Delimit the run of patchs belownging to the same file
 		high := low
 		for high < len(patchs) && patchs[high].File == patchs[low].File {
-			models.PreConditionf(
+			shared.PreConditionf(
 				patchs[high].Start <= patchs[high].End,
 				"patch has an empty range: %s:%d-%d",
 				patchs[high].File, patchs[high].Start, patchs[high].End,
 			)
 			if high > low {
-				models.PreConditionf(
+				shared.PreConditionf(
 					patchs[high-1].End < patchs[high].Start,
 					"patchs overlap, they should have been merged: %s:%d-%d and %s:%d-%d",
 					patchs[high-1].File, patchs[high-1].Start, patchs[high-1].End,
 					patchs[high].File, patchs[high].Start, patchs[high].End,
 				)
-				models.PreConditionf(
+				shared.PreConditionf(
 					patchs[high-1].End+1 != patchs[high].Start,
 					"patchs adjacent, they should have been merged: %s:%d-%d and %s:%d-%d",
 					patchs[high-1].File, patchs[high-1].Start, patchs[high-1].End,
@@ -49,8 +49,8 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 
 // parseSourcesFile reads one file and dispatches each line to every patch that wants it.
 // All patchs must belong to the same file, be sorted and be disjoint.
-func parseSourcesFile(sys fs.FS, patchs []models.Patch, contextSize int) {
-	models.PreCondition(len(patchs) > 0, "cannot process empty list")
+func parseSourcesFile(sys fs.FS, patchs []shared.Patch, contextSize int) {
+	shared.PreCondition(len(patchs) > 0, "cannot process empty list")
 
 	file, err := sys.Open(patchs[0].File)
 	if err != nil {
@@ -95,7 +95,7 @@ func parseSourcesFile(sys fs.FS, patchs []models.Patch, contextSize int) {
 }
 
 // setSourceError report a file level failure on every patch of that file
-func setSourceError(patchs []models.Patch, err error) {
+func setSourceError(patchs []shared.Patch, err error) {
 	for i := range patchs {
 		patchs[i].SourceError = err
 	}
