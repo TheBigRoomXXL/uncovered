@@ -2,6 +2,7 @@
  {
   "end": 28,
   "file": "cli/main.go",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -11,6 +12,7 @@
  {
   "end": 69,
   "file": "cli/main.go",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -20,6 +22,7 @@
  {
   "end": 42,
   "file": "main.go",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -29,6 +32,7 @@
  {
   "end": 77,
   "file": "pkg/parsing/cobertura.go",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -38,6 +42,7 @@
  {
   "end": 67,
   "file": "pkg/rendering/terminal.go",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,

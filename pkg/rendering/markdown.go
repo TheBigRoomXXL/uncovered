@@ -9,7 +9,7 @@ import (
 // Display a patch a markdown
 func RenderPatchMarkdown(patch models.Patch) string {
 	var result strings.Builder
-	result.WriteString(fmt.Sprintf("/%s:%d", patch.File, patch.Start))
+	result.WriteString(fmt.Sprintf("%s:%d", patch.File, patch.Start))
 	if patch.Start != patch.End {
 		result.WriteString(fmt.Sprintf("-%d", patch.End))
 	}

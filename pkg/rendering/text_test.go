@@ -18,7 +18,7 @@ func TestRenderPatchTextBasic(t *testing.T) {
 	}
 	got := RenderPatchText(p, false)
 
-	expected := `/something.go:10
+	expected := `something.go:10
  8 |   bidule
  9 |   machine
 10 | ✗ uncovered
@@ -40,7 +40,7 @@ func TestRenderPatchTextWithColor(t *testing.T) {
 	got := RenderPatchText(p, true)
 
 	c := ANSIColors
-	expected := "/something.go:10\n" +
+	expected := "something.go:10\n" +
 		c.Dim + " 8 | bidule" + c.Reset + "\n" +
 		c.Dim + " 9 | machine" + c.Reset + "\n" +
 		c.Orange + "10 | uncovered" + c.Reset + "\n" +

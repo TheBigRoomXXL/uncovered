@@ -18,7 +18,7 @@ func TestRenderPatchMarkdownBasic(t *testing.T) {
 	}
 	got := RenderPatchMarkdown(p)
 
-	expected := "/something.go:10\n" +
+	expected := "something.go:10\n" +
 		"```diff\n" +
 		"  bidule\n" +
 		"  machine\n" +

@@ -2,6 +2,7 @@
  {
   "end": 32,
   "file": "C:\\temp\\AbstractClass.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -11,6 +12,7 @@
  {
   "end": 51,
   "file": "C:\\temp\\AbstractClass.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -20,6 +22,7 @@
  {
   "end": 44,
   "file": "C:\\temp\\AnalyzerTestClass.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -29,6 +32,7 @@
  {
   "end": 14,
   "file": "C:\\temp\\CodeContract_Contract.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -38,6 +42,7 @@
  {
   "end": 14,
   "file": "C:\\temp\\GenericClass.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -47,6 +52,7 @@
  {
   "end": 21,
   "file": "C:\\temp\\PartialClass.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -56,6 +62,7 @@
  {
   "end": 32,
   "file": "C:\\temp\\PartialClass.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -65,6 +72,7 @@
  {
   "end": 15,
   "file": "C:\\temp\\PartialClass2.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -74,6 +82,7 @@
  {
   "end": 8,
   "file": "C:\\temp\\PartialClassWithAutoProperties2.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -83,6 +92,7 @@
  {
   "end": 46,
   "file": "C:\\temp\\Program.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -92,6 +102,7 @@
  {
   "end": 25,
   "file": "C:\\temp\\TestClass.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -101,6 +112,7 @@
  {
   "end": 21,
   "file": "C:\\temp\\TestClass2.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -110,6 +122,7 @@
  {
   "end": 39,
   "file": "C:\\temp\\TestClass2.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -119,6 +132,7 @@
  {
   "end": 83,
   "file": "C:\\temp\\TestClass2.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -128,6 +142,7 @@
  {
   "end": 57,
   "file": "C:\\temp\\TestClass.cs",
+  "file_abs": "",
   "source": null,
   "source_after": null,
   "source_before": null,
