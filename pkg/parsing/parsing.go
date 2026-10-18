@@ -56,8 +56,7 @@ func Transform(coverage shared.Coverage) []shared.Patch {
 		}
 	}
 
-	patchs = SortPatch(patchs)
-	return patchs
+	return SortPatch(patchs)
 }
 
 // Internally we use fs.FS so all path must be relative to /
