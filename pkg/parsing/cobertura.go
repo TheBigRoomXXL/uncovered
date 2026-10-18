@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"sort"
 	"uncovered/pkg/shared"
 )
 
@@ -24,56 +23,35 @@ type coberturaReport struct {
 	} `xml:"packages>package"`
 }
 
-// Parse a cobertura XMl coverage report to extract all untest code patchs
-func ParseCobertura(report io.Reader, filter func(filtepath string) bool) ([]shared.Patch, error) {
+// Parse a cobertura XMl coverage report to extract the coverage of every file.
+// Files are filtered on the path as written in the report, then keyed by their
+// absolute path so that classes pointing to the same file are merged.
+func ParseCobertura(report io.Reader, base string, filter func(filtepath string) bool) (shared.Coverage, error) {
 	var parsed coberturaReport
 	if err := xml.NewDecoder(report).Decode(&parsed); err != nil {
 		return nil, fmt.Errorf("failed to decode coverage report: %w", err)
 	}
-	patchs := []shared.Patch{}
+
+	coverage := shared.Coverage{}
 	for _, pkg := range parsed.Packages {
 		for _, class := range pkg.Classes {
 			if !filter(class.Filename) {
 				continue
 			}
 
-			// A class may be reported in several chunks and lines are not
-			// guaranteed to be ordered, so work on a sorted copy.
-			lines := make([]struct {
-				Number int
-				Hits   int
-			}, 0, len(class.Lines))
-			for _, line := range class.Lines {
-				lines = append(lines, struct {
-					Number int
-					Hits   int
-				}{line.Number, line.Hits})
+			path := ComputePath(base, class.Filename)
+			file, ok := coverage[path]
+			if !ok {
+				file = shared.FileCoverage{File: class.Filename, Lines: map[int]bool{}}
+				coverage[path] = file
 			}
-			sort.Slice(lines, func(i, j int) bool { return lines[i].Number < lines[j].Number })
 
-			// Group consecutive uncovered lines. Line numbers missing from the
-			// report (blanks, comments, declarations) are not coverable, so they
-			// do not break a patch: a patch ends on the first covered line.
-			var current *shared.Patch
-			for _, line := range lines {
-				if line.Hits > 0 {
-					if current != nil {
-						patchs = append(patchs, *current)
-						current = nil
-					}
-					continue
-				}
-				if current == nil {
-					current = &shared.Patch{File: class.Filename, Start: line.Number, End: line.Number}
-				} else {
-					current.End = line.Number
-				}
-			}
-			if current != nil {
-				patchs = append(patchs, *current)
+			// A line reported several times is covered at least once
+			for _, line := range class.Lines {
+				file.Lines[line.Number] = file.Lines[line.Number] || line.Hits > 0
 			}
 		}
 	}
 
-	return patchs, nil
+	return coverage, nil
 }

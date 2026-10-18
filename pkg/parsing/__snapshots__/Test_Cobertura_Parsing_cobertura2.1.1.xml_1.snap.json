@@ -2,7 +2,7 @@
  {
   "end": 12,
   "file": "test/AbstractClass_SampleImpl1.java",
-  "file_abs": "",
+  "file_abs": "base/test/AbstractClass_SampleImpl1.java",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -12,7 +12,7 @@
  {
   "end": 12,
   "file": "test/AbstractClass_SampleImpl2.java",
-  "file_abs": "",
+  "file_abs": "base/test/AbstractClass_SampleImpl2.java",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -22,7 +22,7 @@
  {
   "end": 2,
   "file": "test/Program.java",
-  "file_abs": "",
+  "file_abs": "base/test/Program.java",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -32,7 +32,7 @@
  {
   "end": 20,
   "file": "test/TestClass.java",
-  "file_abs": "",
+  "file_abs": "base/test/TestClass.java",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -42,7 +42,7 @@
  {
   "end": 34,
   "file": "test/TestClass.java",
-  "file_abs": "",
+  "file_abs": "base/test/TestClass.java",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -52,7 +52,7 @@
  {
   "end": 9,
   "file": "test/sub/Sub.java",
-  "file_abs": "",
+  "file_abs": "base/test/sub/Sub.java",
   "source": null,
   "source_after": null,
   "source_before": null,

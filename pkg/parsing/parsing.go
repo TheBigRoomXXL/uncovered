@@ -2,40 +2,75 @@ package parsing
 
 import (
 	"io"
+	"maps"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"uncovered/pkg/shared"
 )
 
 func Parse(report io.Reader, base string, contextSize int, filterFile func(string) bool) ([]shared.Patch, error) {
-	patchs, err := ParseCobertura(report, filterFile)
+	// TODO: accept a list of report, and merge them
+	coverage, err := ParseCobertura(report, base, filterFile)
 	if err != nil {
 		return nil, err
 	}
 
-	patchs = SortPatch(patchs)
-	patchs = ComputePaths(patchs, base)
+	patchs := Transform(coverage)
 
 	fileSystem := os.DirFS("/")
-	patchs = ParseSources(fileSystem, patchs, contextSize)
+	patchs = AddSources(fileSystem, patchs, contextSize)
 
 	return patchs, nil
 }
 
-// We fs.FS so all path must be relative to /
-// relative pass are interpelated to a "base" wich can be the cwd or a user inputed path
-func ComputePaths(patchs []shared.Patch, base string) []shared.Patch {
-	shared.PreCondition(filepath.IsAbs(base), "base should be absolute")
-	for i := range patchs {
-		patchs[i].FileAbs = strings.TrimPrefix(toAbsolute(base, patchs[i].File), "/")
+// Transform a coverage map into a list of uncovered patch
+func Transform(coverage shared.Coverage) []shared.Patch {
+	patchs := []shared.Patch{}
+	for path, file := range coverage {
+		numbers := slices.Sorted(maps.Keys(file.Lines))
+
+		// Group consecutive uncovered lines. Line numbers missing from the
+		// report (blanks, comments, declarations) are not coverable, so they
+		// do not break a patch: a patch ends on the first covered line.
+		var patch *shared.Patch
+		for _, number := range numbers {
+			if file.Lines[number] {
+				// We reach a covered line so it is the end of the current patch
+				if patch != nil {
+					patchs = append(patchs, *patch)
+					patch = nil
+				}
+				continue
+			}
+
+			if patch == nil {
+				patch = &shared.Patch{File: file.File, FileAbs: path, Start: number, End: number}
+			} else {
+				patch.End = number
+			}
+		}
+		if patch != nil {
+			patchs = append(patchs, *patch)
+		}
 	}
+
+	patchs = SortPatch(patchs)
 	return patchs
 }
 
-func toAbsolute(base, path string) string {
+// Internally we use fs.FS so all path must be relative to /
+// relative pass are interpelated to a "base" wich can be the cwd or a user inputed path
+func ComputePath(base, path string) string {
+	shared.PreCondition(filepath.IsAbs(base), "base should be absolute")
+
+	var abs string
 	if filepath.IsAbs(path) {
-		return filepath.Clean(path)
+		abs = filepath.Clean(path)
+	} else {
+		abs = filepath.Join(base, path) // Join also Cleans
 	}
-	return filepath.Join(base, path) // Join also Cleans
+
+	return strings.TrimPrefix(abs, "/")
 }

@@ -1,11 +1,8 @@
-Features
-
-
 Testing
 [ ] Patch: assert Start and End > 0
 [X] source.go:  assert context size is > 0
 [ ] source.go:  test emtpy patch list 
-[ ] source.go:  test multi file ParseSources
+[ ] source.go:  test multi file AddSources
 [ ] source.go:  test absolute path to file
 [ ] source.go:  test relative path to file (multiple variation)
 [ ] source.go:  test path is a directory
@@ -25,7 +22,7 @@ Testing
 [X] source.go:  invariance: adjacent patches (1-2 then 3-3) is not legal, should be treated like overlaping patchs
 [ ] source.go:  invariance: validate that patch start are properly sorted as HEAD advance
 [ ] source.go:  invariance: test that patch.Start >= 1 (line count start at 1, not 0)
-[ ] source.go:  precondition : alling ParseSources twice on the same slice appends duplicates (before=["1" "1"]) (not idempotent) add a pre-condition that Source/SourceBefore/SourceAfter are empty on entry.
+[ ] source.go:  precondition : alling AddSources twice on the same slice appends duplicates (before=["1" "1"]) (not idempotent) add a pre-condition that Source/SourceBefore/SourceAfter are empty on entry.
 [ ] source.go:  test fuzz, seed some real source file and assert that :
     [ ] SourceBefore ++ Source ++ SourceAfter == a contiguous file slice 
     [ ] len(SourceBefore) == min(ctx, Start-1)

@@ -6,9 +6,9 @@ import (
 	"uncovered/pkg/shared"
 )
 
-// ParseSources fills the source and its surrounding context of every patch
+// AddSources fills the source and its surrounding context of every patch
 // TODO: addd suport for filterPatchs
-func ParseSources(sys fs.FS, patchs []shared.Patch, contextSize int) []shared.Patch {
+func AddSources(sys fs.FS, patchs []shared.Patch, contextSize int) []shared.Patch {
 	shared.PreCondition(contextSize >= 0, "contex size must be positive")
 
 	// Sorting ensure we process patchs file by file and only increase line number
@@ -17,7 +17,7 @@ func ParseSources(sys fs.FS, patchs []shared.Patch, contextSize int) []shared.Pa
 	for low := 0; low < len(patchs); {
 		// Delimit the run of patchs belownging to the same file
 		high := low
-		for high < len(patchs) && patchs[high].File == patchs[low].File {
+		for high < len(patchs) && patchs[high].FileAbs == patchs[low].FileAbs {
 			shared.PreConditionf(
 				patchs[high].Start <= patchs[high].End,
 				"patch has an empty range: %s:%d-%d",
@@ -40,19 +40,19 @@ func ParseSources(sys fs.FS, patchs []shared.Patch, contextSize int) []shared.Pa
 			high++
 		}
 
-		parseSourcesFile(sys, patchs[low:high], contextSize)
+		AddSourcesFile(sys, patchs[low:high], contextSize)
 		low = high
 	}
 
 	return patchs
 }
 
-// parseSourcesFile reads one file and dispatches each line to every patch that wants it.
+// AddSourcesFile reads one file and dispatches each line to every patch that wants it.
 // All patchs must belong to the same file, be sorted and be disjoint.
-func parseSourcesFile(sys fs.FS, patchs []shared.Patch, contextSize int) {
+func AddSourcesFile(sys fs.FS, patchs []shared.Patch, contextSize int) {
 	shared.PreCondition(len(patchs) > 0, "cannot process empty list")
 
-	file, err := sys.Open(patchs[0].File)
+	file, err := sys.Open(patchs[0].FileAbs)
 	if err != nil {
 		setSourceError(patchs, err)
 		return

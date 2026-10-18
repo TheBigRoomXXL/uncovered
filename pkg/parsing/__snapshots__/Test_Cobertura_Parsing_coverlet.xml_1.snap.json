@@ -2,7 +2,7 @@
  {
   "end": 32,
   "file": "AbstractClass.cs",
-  "file_abs": "",
+  "file_abs": "base/AbstractClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -12,7 +12,7 @@
  {
   "end": 51,
   "file": "AbstractClass.cs",
-  "file_abs": "",
+  "file_abs": "base/AbstractClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -22,7 +22,7 @@
  {
   "end": 44,
   "file": "AnalyzerTestClass.cs",
-  "file_abs": "",
+  "file_abs": "base/AnalyzerTestClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -32,7 +32,7 @@
  {
   "end": 17,
   "file": "AutoMapperExtensions.cs",
-  "file_abs": "",
+  "file_abs": "base/AutoMapperExtensions.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -42,7 +42,7 @@
  {
   "end": 14,
   "file": "CodeContract_Contract.cs",
-  "file_abs": "",
+  "file_abs": "base/CodeContract_Contract.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -52,7 +52,7 @@
  {
   "end": 15,
   "file": "GenericAsyncClass.cs",
-  "file_abs": "",
+  "file_abs": "base/GenericAsyncClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -60,79 +60,9 @@
   "start": 9
  },
  {
-  "end": 35,
-  "file": "GenericAsyncClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 34
- },
- {
-  "end": 44,
-  "file": "GenericAsyncClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 42
- },
- {
-  "end": 39,
-  "file": "GenericAsyncClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 38
- },
- {
-  "end": 49,
-  "file": "GenericAsyncClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 47
- },
- {
-  "end": 56,
-  "file": "GenericAsyncClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 55
- },
- {
-  "end": 65,
-  "file": "GenericAsyncClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 63
- },
- {
-  "end": 60,
-  "file": "GenericAsyncClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 59
- },
- {
   "end": 24,
   "file": "GenericAsyncClass.cs",
-  "file_abs": "",
+  "file_abs": "base/GenericAsyncClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -140,9 +70,19 @@
   "start": 22
  },
  {
+  "end": 65,
+  "file": "GenericAsyncClass.cs",
+  "file_abs": "base/GenericAsyncClass.cs",
+  "source": null,
+  "source_after": null,
+  "source_before": null,
+  "source_error": null,
+  "start": 34
+ },
+ {
   "end": 14,
   "file": "GenericClass.cs",
-  "file_abs": "",
+  "file_abs": "base/GenericClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -152,7 +92,7 @@
  {
   "end": 21,
   "file": "PartialClass.cs",
-  "file_abs": "",
+  "file_abs": "base/PartialClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -162,7 +102,7 @@
  {
   "end": 32,
   "file": "PartialClass.cs",
-  "file_abs": "",
+  "file_abs": "base/PartialClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -172,7 +112,7 @@
  {
   "end": 15,
   "file": "PartialClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/PartialClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -182,7 +122,7 @@
  {
   "end": 8,
   "file": "PartialClassWithAutoProperties2.cs",
-  "file_abs": "",
+  "file_abs": "base/PartialClassWithAutoProperties2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -192,7 +132,7 @@
  {
   "end": 46,
   "file": "Program.cs",
-  "file_abs": "",
+  "file_abs": "base/Program.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -202,7 +142,7 @@
  {
   "end": 26,
   "file": "TestClass.cs",
-  "file_abs": "",
+  "file_abs": "base/TestClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -210,9 +150,9 @@
   "start": 24
  },
  {
-  "end": 54,
+  "end": 69,
   "file": "TestClass.cs",
-  "file_abs": "",
+  "file_abs": "base/TestClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -220,29 +160,9 @@
   "start": 52
  },
  {
-  "end": 69,
-  "file": "TestClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 64
- },
- {
-  "end": 59,
-  "file": "TestClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 57
- },
- {
   "end": 21,
   "file": "TestClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/TestClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -252,7 +172,7 @@
  {
   "end": 39,
   "file": "TestClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/TestClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -262,7 +182,7 @@
  {
   "end": 83,
   "file": "TestClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/TestClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,

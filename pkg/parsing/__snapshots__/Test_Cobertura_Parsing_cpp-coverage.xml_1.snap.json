@@ -2,7 +2,7 @@
  {
   "end": 2,
   "file": "/temp/someclass.h",
-  "file_abs": "",
+  "file_abs": "temp/someclass.h",
   "source": null,
   "source_after": null,
   "source_before": null,

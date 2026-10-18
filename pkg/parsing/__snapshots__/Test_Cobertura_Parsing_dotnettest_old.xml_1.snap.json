@@ -2,7 +2,7 @@
  {
   "end": 32,
   "file": "C:\\temp\\AbstractClass.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\AbstractClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -12,7 +12,7 @@
  {
   "end": 51,
   "file": "C:\\temp\\AbstractClass.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\AbstractClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -22,7 +22,7 @@
  {
   "end": 44,
   "file": "C:\\temp\\AnalyzerTestClass.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\AnalyzerTestClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -32,7 +32,7 @@
  {
   "end": 9,
   "file": "C:\\temp\\ClassWithExcludes.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\ClassWithExcludes.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -42,7 +42,7 @@
  {
   "end": 14,
   "file": "C:\\temp\\CodeContract_Contract.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\CodeContract_Contract.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -52,7 +52,7 @@
  {
   "end": 14,
   "file": "C:\\temp\\GenericClass.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\GenericClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -62,7 +62,7 @@
  {
   "end": 6,
   "file": "C:\\temp\\NotMatchingFileName.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\NotMatchingFileName.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -72,7 +72,7 @@
  {
   "end": 21,
   "file": "C:\\temp\\PartialClass.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\PartialClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -82,7 +82,7 @@
  {
   "end": 32,
   "file": "C:\\temp\\PartialClass.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\PartialClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -92,7 +92,7 @@
  {
   "end": 15,
   "file": "C:\\temp\\PartialClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\PartialClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -102,7 +102,7 @@
  {
   "end": 6,
   "file": "C:\\temp\\PartialClassWithAutoProperties.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\PartialClassWithAutoProperties.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -112,7 +112,7 @@
  {
   "end": 8,
   "file": "C:\\temp\\PartialClassWithAutoProperties2.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\PartialClassWithAutoProperties2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -122,7 +122,7 @@
  {
   "end": 44,
   "file": "C:\\temp\\Program.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\Program.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -132,7 +132,7 @@
  {
   "end": 24,
   "file": "C:\\temp\\TestClass.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\TestClass.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -140,9 +140,19 @@
   "start": 22
  },
  {
+  "end": 35,
+  "file": "C:\\temp\\TestClass.cs",
+  "file_abs": "base/C:\\temp\\TestClass.cs",
+  "source": null,
+  "source_after": null,
+  "source_before": null,
+  "source_error": null,
+  "start": 30
+ },
+ {
   "end": 11,
   "file": "C:\\temp\\TestClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\TestClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -152,7 +162,7 @@
  {
   "end": 21,
   "file": "C:\\temp\\TestClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\TestClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -162,7 +172,7 @@
  {
   "end": 39,
   "file": "C:\\temp\\TestClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\TestClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
@@ -172,21 +182,11 @@
  {
   "end": 83,
   "file": "C:\\temp\\TestClass2.cs",
-  "file_abs": "",
+  "file_abs": "base/C:\\temp\\TestClass2.cs",
   "source": null,
   "source_after": null,
   "source_before": null,
   "source_error": null,
   "start": 80
- },
- {
-  "end": 35,
-  "file": "C:\\temp\\TestClass.cs",
-  "file_abs": "",
-  "source": null,
-  "source_after": null,
-  "source_before": null,
-  "source_error": null,
-  "start": 30
  }
 ]
