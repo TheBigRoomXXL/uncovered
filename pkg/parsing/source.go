@@ -17,24 +17,24 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 	for low := 0; low < len(patchs); {
 		// Delimit the run of patchs belownging to the same file
 		high := low
-		for high < len(patchs) && patchs[high].FileAbs == patchs[low].FileAbs {
+		for high < len(patchs) && patchs[high].File == patchs[low].File {
 			models.PreConditionf(
 				patchs[high].Start <= patchs[high].End,
 				"patch has an empty range: %s:%d-%d",
-				patchs[high].FileAbs, patchs[high].Start, patchs[high].End,
+				patchs[high].File, patchs[high].Start, patchs[high].End,
 			)
 			if high > low {
 				models.PreConditionf(
 					patchs[high-1].End < patchs[high].Start,
 					"patchs overlap, they should have been merged: %s:%d-%d and %s:%d-%d",
-					patchs[high-1].FileAbs, patchs[high-1].Start, patchs[high-1].End,
-					patchs[high].FileAbs, patchs[high].Start, patchs[high].End,
+					patchs[high-1].File, patchs[high-1].Start, patchs[high-1].End,
+					patchs[high].File, patchs[high].Start, patchs[high].End,
 				)
 				models.PreConditionf(
 					patchs[high-1].End+1 != patchs[high].Start,
 					"patchs adjacent, they should have been merged: %s:%d-%d and %s:%d-%d",
-					patchs[high-1].FileAbs, patchs[high-1].Start, patchs[high-1].End,
-					patchs[high].FileAbs, patchs[high].Start, patchs[high].End,
+					patchs[high-1].File, patchs[high-1].Start, patchs[high-1].End,
+					patchs[high].File, patchs[high].Start, patchs[high].End,
 				)
 			}
 			high++
@@ -52,7 +52,7 @@ func ParseSources(sys fs.FS, patchs []models.Patch, contextSize int) []models.Pa
 func parseSourcesFile(sys fs.FS, patchs []models.Patch, contextSize int) {
 	models.PreCondition(len(patchs) > 0, "cannot process empty list")
 
-	file, err := sys.Open(patchs[0].FileAbs)
+	file, err := sys.Open(patchs[0].File)
 	if err != nil {
 		setSourceError(patchs, err)
 		return
