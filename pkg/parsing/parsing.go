@@ -26,6 +26,7 @@ func Parse(report io.Reader, base string, contextSize int, filterFile func(strin
 // We fs.FS so all path must be relative to /
 // relative pass are interpelated to a "base" wich can be the cwd or a user inputed path
 func CleanPaths(patchs []models.Patch, base string) []models.Patch {
+	models.PreCondition(filepath.IsAbs(base), "base should be absolute")
 	for i := range patchs {
 		patchs[i].File = strings.TrimPrefix(toAbsolute(base, patchs[i].File), "/")
 	}

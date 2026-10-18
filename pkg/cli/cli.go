@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"uncovered/pkg/models"
@@ -75,6 +76,12 @@ func NewConfigFromCLI(args []string) (*models.Config, error) {
 			return nil, fmt.Errorf("context-size must be a positive integer, got %q", flags.Arg(1))
 		}
 		config.ContextSize = contextSize
+	}
+
+	config.Base, err = filepath.Abs(config.Base)
+	if err != nil {
+		flags.Usage()
+		return nil, fmt.Errorf("could not parse root: %s", err)
 	}
 
 	return config, nil

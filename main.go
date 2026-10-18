@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"uncovered/cli"
+	"uncovered/pkg/cli"
 	"uncovered/pkg/filtering"
 	"uncovered/pkg/parsing"
 	"uncovered/pkg/rendering"
