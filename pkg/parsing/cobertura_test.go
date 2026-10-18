@@ -47,7 +47,7 @@ func ForFilesIn(t *testing.T, dirPath string) iter.Seq2[string, *os.File] {
 }
 
 func FilterNothing(path string) bool {
-	return false
+	return true
 }
 
 func Test_Cobertura_Parsing(t *testing.T) {
