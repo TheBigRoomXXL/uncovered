@@ -38,8 +38,11 @@ Feature:
 - more coverage format
 - redering with custom go tempalte
 - rendering html
+- context based filtering
+- git diff based filtering
 
 Perf:
 - paralelle coverage parsing when multi file are given
 - turn AddSource into a generator `WithContext` (could do the same WithSources for the html render )
 - turn the renderers into a generator that take patch to print as soon as possible
+- in PR workflow, publish the coverage report from uncovered

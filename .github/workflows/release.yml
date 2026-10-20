@@ -24,6 +24,12 @@ jobs:
         with:
           go-version-file: go.mod
 
+      - name: setup upx
+        run: |
+          export UPX_VERSION=5.2.1
+          curl -sSL "https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-amd64_linux.tar.xz" \
+            | tar -xJ --strip-components=1 -C /usr/local/bin "upx-${UPX_VERSION}-amd64_linux/upx"
+
       - name: cross-platform-build
         run: |
           mkdir ./builds/
@@ -36,7 +42,6 @@ jobs:
           GOOS=darwin  GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_darwin_amd64
           GOOS=windows GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_windows_amd64
 
-          sudo apt-get update && sudo apt-get install -y upx
           upx ./builds/uncovered_linux*
           upx ./builds/uncovered_windows*
 
