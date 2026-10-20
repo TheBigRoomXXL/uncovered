@@ -32,3 +32,14 @@ Testing
 [ ] invariances.go:  test it.
 [ ] cobertura.go:  test "failed to decode coverage report" 
 [ ] cobertura.go:  test if filterFile(class.Filename) { continue }
+
+Feature:
+- support muliple coverage file
+- more coverage format
+- redering with custom go tempalte
+- rendering html
+
+Perf:
+- paralelle coverage parsing when multi file are given
+- turn AddSource into a generator `WithContext` (could do the same WithSources for the html render )
+- turn the renderers into a generator that take patch to print as soon as possible

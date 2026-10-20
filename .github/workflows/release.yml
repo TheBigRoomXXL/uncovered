@@ -1,0 +1,48 @@
+name: push-and-pr
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions: {}
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  build-and-release:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: setup-repos
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: setup-go
+        uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b
+        with:
+          go-version-file: go.mod
+
+      - name: cross-platform-build
+        run: |
+          mkdir ./builds/
+          GOOS=linux   GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_linux_arm64
+          GOOS=freebsd GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_freebsd_arm64
+          GOOS=darwin  GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_darwin_arm64
+          GOOS=windows GOARCH=arm64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_windows_arm64
+          GOOS=linux   GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_linux_amd64
+          GOOS=freebsd GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_freebsd_amd64
+          GOOS=darwin  GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_darwin_amd64
+          GOOS=windows GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o ./builds/uncovered_windows_amd64
+
+          sudo apt-get update && sudo apt-get install -y upx
+          upx ./builds/uncovered_linux*
+          upx ./builds/uncovered_windows*
+
+          sha256sum ./builds/* > ./builds/checksums.txt
+
+      - name: release
+        uses: ncipollo/release-action@440c8c1cb0ed28b9f43e4d1d670870f059653174
+        with:
+          artifacts: "./builds/*"
