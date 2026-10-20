@@ -10,7 +10,6 @@ import (
 func RenderPatchMarkdown(patch shared.Patch) string {
 	var result strings.Builder
 	result.WriteString(patch.Identifier())
-	result.WriteString("\n")
 
 	if patch.SourceError != nil {
 		result.WriteString(fmt.Sprintf("error retriving source: %s\n", patch.SourceError))
