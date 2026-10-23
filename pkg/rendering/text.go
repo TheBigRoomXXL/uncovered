@@ -68,12 +68,9 @@ func RenderPatchText(patch shared.Patch, color bool) string {
 }
 
 func countDigits(n int) int {
+	shared.PreCondition(n > 0, "line number should always be geater than 0")
 	if n == 0 {
 		return 1
-	}
-
-	if n < 0 {
-		n = -n
 	}
 
 	count := 0

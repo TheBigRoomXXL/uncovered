@@ -1,10 +1,12 @@
 package rendering
 
 import (
+	"strconv"
 	"testing"
 	"uncovered/pkg/shared"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRenderPatchTextBasic(t *testing.T) {
@@ -48,4 +50,43 @@ func TestRenderPatchTextWithColor(t *testing.T) {
 		c.Dim + "12 | truc" + c.Reset + "\n"
 
 	assert.Equal(t, expected, got)
+}
+
+func TestCountDigit(t *testing.T) {
+
+	testCases := []struct {
+		number int
+		expect int
+	}{
+		{
+			number: 1,
+			expect: 1,
+		},
+		{
+			number: 10,
+			expect: 2,
+		},
+		{
+			number: 100,
+			expect: 3,
+		},
+		{
+			number: 42424324,
+			expect: 8,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(strconv.Itoa(tc.number), func(t *testing.T) {
+			count := countDigits(tc.number)
+			require.Equal(t, tc.expect, count)
+		})
+	}
+}
+
+func TestCountPrecondition(t *testing.T) {
+
+	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
+		countDigits(-1)
+	})
 }
