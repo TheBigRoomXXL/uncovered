@@ -11,6 +11,11 @@ import (
 )
 
 func Parse(report io.Reader, base string, contextSize int, filterFile func(string) bool) ([]shared.Patch, error) {
+	base, err := filepath.Abs(base)
+	if err != nil {
+		return nil, err
+	}
+
 	// TODO: accept a list of report, and merge them
 	coverage, err := ParseCobertura(report, base, filterFile)
 	if err != nil {

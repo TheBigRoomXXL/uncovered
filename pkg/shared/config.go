@@ -1,5 +1,7 @@
 package shared
 
+import "fmt"
+
 type Config struct {
 	ReportPath  string
 	Includes    []string
@@ -8,11 +10,18 @@ type Config struct {
 	Base        string
 }
 
-// Coverage of every file in the reports, keyed by the normalized absolute path
-type Coverage = map[string]FileCoverage
+func NewConfig() *Config {
+	return &Config{
+		Base:        ".",
+		Includes:    []string{},
+		Excludes:    []string{},
+		ContextSize: 3,
+	}
+}
 
-// FileCoverage holds the coverage data of a single file
-type FileCoverage struct {
-	File  string       // path as written in the report, used for display
-	Lines map[int]bool // key is line number, value is covered or not
+func ValidateConfig(c *Config) error {
+	if c.ContextSize < 1 {
+		return fmt.Errorf("context-size must be a positive integer, got %d", c.ContextSize)
+	}
+	return nil
 }

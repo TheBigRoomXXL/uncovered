@@ -4,9 +4,8 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"os"
-	"path/filepath"
-	"strconv"
 	"strings"
 	"uncovered/pkg/shared"
 )
@@ -14,13 +13,6 @@ import (
 // stringList collects a repeatable string option: every occurrence of the
 // flag appends instead of overwriting the previous value.
 type stringList []string
-
-var DefaultConfig = &shared.Config{
-	Includes:    []string{},
-	Excludes:    []string{},
-	ContextSize: 3,
-	Base:        "cwd",
-}
 
 func (list *stringList) String() string {
 	if list == nil {
@@ -40,48 +32,37 @@ func (list *stringList) Set(value string) error {
 // Build the config from cli options
 func NewConfigFromCLI(args []string) (*shared.Config, error) {
 	// Default values
-	config := DefaultConfig
-
-	cwd, err := os.Getwd()
-	if err != nil {
-		return nil, err
-	}
-	config.Base = cwd
+	config := shared.NewConfig()
 
 	flags := flag.NewFlagSet(args[0], flag.ContinueOnError)
+	flags.SetOutput(io.Discard) // Parse now prints nothing on error
 	flags.Usage = func() {
 		fmt.Fprintf(flags.Output(), "usage: %s [options] <cobertura-report.xml>\n\noptions:\n", args[0])
 		flags.PrintDefaults()
 	}
+
 	flags.Var((*stringList)(&config.Includes), "include", "only report on this file; repeat for several files")
 	flags.Var((*stringList)(&config.Excludes), "exclude", "never report on this file; repeat for several files")
 	flags.IntVar(&config.ContextSize, "context-size", config.ContextSize, "how many line to display before and after each patch")
 	flags.StringVar(&config.Base, "root", config.Base, "base used for relative paths in the report")
 
 	if err := flags.Parse(args[1:]); err != nil {
+		if errors.Is(err, flag.ErrHelp) {
+			flags.SetOutput(os.Stderr)
+			flags.Usage()
+			return nil, err
+		}
 		return nil, err
 	}
 
-	// The report path is mandatory, the context size is optional.
-	if flags.NArg() < 1 {
-		flags.Usage()
-		return nil, errors.New("missing <cobertura-report.xml>")
+	if flags.NArg() != 1 {
+		return nil, fmt.Errorf("expected exactly one <report-path> as argument, got %s", flags.Args())
 	}
 	config.ReportPath = flags.Arg(0)
 
-	if flags.NArg() > 1 {
-		contextSize, err := strconv.Atoi(flags.Arg(1))
-		if err != nil || contextSize < 0 {
-			flags.Usage()
-			return nil, fmt.Errorf("context-size must be a positive integer, got %q", flags.Arg(1))
-		}
-		config.ContextSize = contextSize
-	}
-
-	config.Base, err = filepath.Abs(config.Base)
+	err := shared.ValidateConfig(config)
 	if err != nil {
-		flags.Usage()
-		return nil, fmt.Errorf("could not parse root: %s", err)
+		return nil, err
 	}
 
 	return config, nil
