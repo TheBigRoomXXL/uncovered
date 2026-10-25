@@ -21,11 +21,12 @@ func Parse(report io.Reader, base string, filterFile func(string) bool) ([]share
 		return nil, err
 	}
 
-	patchs := SortPatch(Transform(coverage))
+	patchs := Transform(coverage)
 	return patchs, nil
 }
 
 // Transform a coverage map into a list of uncovered patch
+// returned patchs are guaranted to be ordered by filename an line number
 func Transform(coverage shared.Coverage) []shared.Patch {
 	patchs := []shared.Patch{}
 	for path, file := range coverage {
