@@ -36,5 +36,8 @@ func (p *Patch) Identifier() string {
 	return result.String()
 }
 
-type Parser = func(stream io.Writer, patchs []Patch)
+// Renderer does not return an errors because it is already writing
+// to ouput, so if an error occure, it is best place to cleanly incorporate
+// the error into the programme output
+// For example it can halde issue at the patch level rather than the entire batch
 type Renderer = func(stream io.Writer, patchs []Patch)
