@@ -1,0 +1,46 @@
+
+something.go/that.go:15-16
+```diff
+    if amount <= 0 {
+-       return errors.New("deposit must be positive")
+-   }
+    a.Balance += amount
+```
+
+something.go/that.go:31-39
+```diff
+  // Transfer is never called by the tests.
+- func Transfer(from, to *Account, amount int) error {
+-   if err := from.Withdraw(amount); err != nil {
+-       return err
+-   }
+-   if err := to.Deposit(amount); err != nil {
+-       from.Balance += amount
+-       return err
+-   }
+-   return nil
+  }
+```
+
+something.go/this.go:17-18
+```diff
+    if ignoreCase {
+-       s = strings.ToLower(s)
+-   }
+    return s == Reverse(s)
+```
+
+something.go/this.go:23-31
+```diff
+  // CountVowels is never called by the tests.
+- func CountVowels(s string) int {
+-   count := 0
+-   for _, c := range strings.ToLower(s) {
+-       switch c {
+-       case 'a', 'e', 'i', 'o', 'u':
+-           count++
+-       }
+-   }
+-   return count
+  }
+```

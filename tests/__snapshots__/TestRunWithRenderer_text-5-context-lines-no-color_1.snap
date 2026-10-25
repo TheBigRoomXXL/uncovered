@@ -1,5 +1,7 @@
 
 machin.go:10-11
+ 5 |   // Classify is partially covered: only positive and zero are tested.
+ 6 |   func Classify(n int) string {
  7 |    switch {
  8 |    case n > 0:
  9 |        return "positive"
@@ -8,8 +10,12 @@ machin.go:10-11
 12 |    default:
 13 |        return "zero"
 14 |    }
+15 |   }
+16 |   
 
 machin.go:34-35
+29 |   }
+30 |   
 31 |   // Divide is partially covered: the division by zero path is never tested.
 32 |   func Divide(a, b int) (int, error) {
 33 |    if b == 0 {
@@ -18,8 +24,12 @@ machin.go:34-35
 36 |    return a / b, nil
 37 |   }
 38 |   
+39 |   // Factorial is never called by the tests.
+40 |   func Factorial(n int) int {
 
 machin.go:40-44
+35 |    }
+36 |    return a / b, nil
 37 |   }
 38 |   
 39 |   // Factorial is never called by the tests.
@@ -31,6 +41,8 @@ machin.go:40-44
 45 |   }
 
 something.go/that.go:15-16
+10 |   var ErrInsufficientFunds = errors.New("insufficient funds")
+11 |   
 12 |   // Deposit is partially covered: negative amounts are never tested.
 13 |   func (a *Account) Deposit(amount int) error {
 14 |    if amount <= 0 {
@@ -39,8 +51,12 @@ something.go/that.go:15-16
 17 |    a.Balance += amount
 18 |    return nil
 19 |   }
+20 |   
+21 |   // Withdraw is fully covered.
 
 something.go/that.go:31-39
+26 |    a.Balance -= amount
+27 |    return nil
 28 |   }
 29 |   
 30 |   // Transfer is never called by the tests.
@@ -56,6 +72,8 @@ something.go/that.go:31-39
 40 |   }
 
 something.go/this.go:17-18
+12 |   }
+13 |   
 14 |   // IsPalindrome is partially covered: the case-insensitive path is never tested.
 15 |   func IsPalindrome(s string, ignoreCase bool) bool {
 16 |    if ignoreCase {
@@ -64,8 +82,12 @@ something.go/this.go:17-18
 19 |    return s == Reverse(s)
 20 |   }
 21 |   
+22 |   // CountVowels is never called by the tests.
+23 |   func CountVowels(s string) int {
 
 something.go/this.go:23-31
+18 |    }
+19 |    return s == Reverse(s)
 20 |   }
 21 |   
 22 |   // CountVowels is never called by the tests.
@@ -81,6 +103,8 @@ something.go/this.go:23-31
 32 |   }
 
 truc.go:23-24
+18 |   }
+19 |   
 20 |   // Pop is partially covered: the empty branch is never tested.
 21 |   func (t *Truc) Pop() (string, error) {
 22 |    if len(t.items) == 0 {
@@ -89,8 +113,12 @@ truc.go:23-24
 25 |    last := t.items[len(t.items)-1]
 26 |    t.items = t.items[:len(t.items)-1]
 27 |    return last, nil
+28 |   }
+29 |   
 
 truc.go:36-46
+31 |   func (t *Truc) Len() int {
+32 |    return len(t.items)
 33 |   }
 34 |   
 35 |   // Join is never called by the tests.

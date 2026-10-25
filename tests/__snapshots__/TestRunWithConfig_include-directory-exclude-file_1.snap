@@ -1,0 +1,23 @@
+
+something.go/this.go:17-18
+```diff
+    if ignoreCase {
+-       s = strings.ToLower(s)
+-   }
+    return s == Reverse(s)
+```
+
+something.go/this.go:23-31
+```diff
+  // CountVowels is never called by the tests.
+- func CountVowels(s string) int {
+-   count := 0
+-   for _, c := range strings.ToLower(s) {
+-       switch c {
+-       case 'a', 'e', 'i', 'o', 'u':
+-           count++
+-       }
+-   }
+-   return count
+  }
+```

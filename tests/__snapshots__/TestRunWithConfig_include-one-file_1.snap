@@ -1,0 +1,24 @@
+
+truc.go:23-24
+```diff
+    if len(t.items) == 0 {
+-       return "", ErrEmpty
+-   }
+    last := t.items[len(t.items)-1]
+```
+
+truc.go:36-46
+```diff
+  // Join is never called by the tests.
+- func (t *Truc) Join(sep string) string {
+-   if len(t.items) == 0 {
+-       return ""
+-   }
+-   return strings.Join(t.items, sep)
+- }
+- 
+- // Reset is never called by the tests.
+- func (t *Truc) Reset() {
+-   t.items = nil
+- }
+```
