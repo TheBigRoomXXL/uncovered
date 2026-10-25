@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"io/fs"
+	"os"
 	"uncovered/pkg/shared"
 )
 
@@ -29,10 +29,14 @@ var ANSINone = ANSI{
 	Dim:    "",
 }
 
-func NewRendererText(sys fs.FS, contextSize int, color bool) shared.Renderer {
+func NewRendererText(contextSize int, color bool) shared.Renderer {
+	// FS is always the full file system, we only use it to facilitate tests of
+	// WithSources using an interface
+	fileSystem := os.DirFS("/")
+
 	return func(stream io.Writer, patchs []shared.Patch) {
 		streamBuffered := bufio.NewWriter(stream)
-		for patch := range WithSources(sys, patchs, contextSize) {
+		for patch := range WithSources(fileSystem, patchs, contextSize) {
 			RenderPatchText(streamBuffered, patch, color)
 			io.WriteString(stream, "\n")
 			streamBuffered.Flush()

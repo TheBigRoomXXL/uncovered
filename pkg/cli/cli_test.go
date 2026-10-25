@@ -17,7 +17,12 @@ func TestNewConfigFromCLINoOption(t *testing.T) {
 	cliConfig, err := NewConfigFromCLI([]string{"uncovered", "report.xml"})
 
 	require.Nil(t, err)
-	require.Equal(t, defaults, cliConfig)
+	require.Equal(t, defaults.Base, cliConfig.Base)
+	require.Equal(t, defaults.Includes, cliConfig.Includes)
+	require.Equal(t, defaults.Excludes, cliConfig.Excludes)
+	require.Equal(t, defaults.ContextSize, cliConfig.ContextSize)
+	require.NotNil(t, cliConfig.Ouput)
+	require.NotNil(t, cliConfig.Render)
 }
 
 func TestNewConfigFromCLIHelpOption(t *testing.T) {

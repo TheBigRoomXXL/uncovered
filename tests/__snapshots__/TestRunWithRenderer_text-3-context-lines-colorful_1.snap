@@ -1,0 +1,107 @@
+
+machin.go:10-11
+[38;5;244m 7 |  switch {[0m
+[38;5;244m 8 |  case n > 0:[0m
+[38;5;244m 9 |      return "positive"[0m
+[38;5;208m10 |  case n < 0:[0m
+[38;5;208m11 |      return "negative"[0m
+[38;5;244m12 |  default:[0m
+[38;5;244m13 |      return "zero"[0m
+[38;5;244m14 |  }[0m
+
+machin.go:34-35
+[38;5;244m31 | // Divide is partially covered: the division by zero path is never tested.[0m
+[38;5;244m32 | func Divide(a, b int) (int, error) {[0m
+[38;5;244m33 |  if b == 0 {[0m
+[38;5;208m34 |      return 0, fmt.Errorf("cannot divide %d by zero", a)[0m
+[38;5;208m35 |  }[0m
+[38;5;244m36 |  return a / b, nil[0m
+[38;5;244m37 | }[0m
+[38;5;244m38 | [0m
+
+machin.go:40-44
+[38;5;244m37 | }[0m
+[38;5;244m38 | [0m
+[38;5;244m39 | // Factorial is never called by the tests.[0m
+[38;5;208m40 | func Factorial(n int) int {[0m
+[38;5;208m41 |  if n <= 1 {[0m
+[38;5;208m42 |      return 1[0m
+[38;5;208m43 |  }[0m
+[38;5;208m44 |  return n * Factorial(n-1)[0m
+[38;5;244m45 | }[0m
+
+something.go/that.go:15-16
+[38;5;244m12 | // Deposit is partially covered: negative amounts are never tested.[0m
+[38;5;244m13 | func (a *Account) Deposit(amount int) error {[0m
+[38;5;244m14 |  if amount <= 0 {[0m
+[38;5;208m15 |      return errors.New("deposit must be positive")[0m
+[38;5;208m16 |  }[0m
+[38;5;244m17 |  a.Balance += amount[0m
+[38;5;244m18 |  return nil[0m
+[38;5;244m19 | }[0m
+
+something.go/that.go:31-39
+[38;5;244m28 | }[0m
+[38;5;244m29 | [0m
+[38;5;244m30 | // Transfer is never called by the tests.[0m
+[38;5;208m31 | func Transfer(from, to *Account, amount int) error {[0m
+[38;5;208m32 |  if err := from.Withdraw(amount); err != nil {[0m
+[38;5;208m33 |      return err[0m
+[38;5;208m34 |  }[0m
+[38;5;208m35 |  if err := to.Deposit(amount); err != nil {[0m
+[38;5;208m36 |      from.Balance += amount[0m
+[38;5;208m37 |      return err[0m
+[38;5;208m38 |  }[0m
+[38;5;208m39 |  return nil[0m
+[38;5;244m40 | }[0m
+
+something.go/this.go:17-18
+[38;5;244m14 | // IsPalindrome is partially covered: the case-insensitive path is never tested.[0m
+[38;5;244m15 | func IsPalindrome(s string, ignoreCase bool) bool {[0m
+[38;5;244m16 |  if ignoreCase {[0m
+[38;5;208m17 |      s = strings.ToLower(s)[0m
+[38;5;208m18 |  }[0m
+[38;5;244m19 |  return s == Reverse(s)[0m
+[38;5;244m20 | }[0m
+[38;5;244m21 | [0m
+
+something.go/this.go:23-31
+[38;5;244m20 | }[0m
+[38;5;244m21 | [0m
+[38;5;244m22 | // CountVowels is never called by the tests.[0m
+[38;5;208m23 | func CountVowels(s string) int {[0m
+[38;5;208m24 |  count := 0[0m
+[38;5;208m25 |  for _, c := range strings.ToLower(s) {[0m
+[38;5;208m26 |      switch c {[0m
+[38;5;208m27 |      case 'a', 'e', 'i', 'o', 'u':[0m
+[38;5;208m28 |          count++[0m
+[38;5;208m29 |      }[0m
+[38;5;208m30 |  }[0m
+[38;5;208m31 |  return count[0m
+[38;5;244m32 | }[0m
+
+truc.go:23-24
+[38;5;244m20 | // Pop is partially covered: the empty branch is never tested.[0m
+[38;5;244m21 | func (t *Truc) Pop() (string, error) {[0m
+[38;5;244m22 |  if len(t.items) == 0 {[0m
+[38;5;208m23 |      return "", ErrEmpty[0m
+[38;5;208m24 |  }[0m
+[38;5;244m25 |  last := t.items[len(t.items)-1][0m
+[38;5;244m26 |  t.items = t.items[:len(t.items)-1][0m
+[38;5;244m27 |  return last, nil[0m
+
+truc.go:36-46
+[38;5;244m33 | }[0m
+[38;5;244m34 | [0m
+[38;5;244m35 | // Join is never called by the tests.[0m
+[38;5;208m36 | func (t *Truc) Join(sep string) string {[0m
+[38;5;208m37 |  if len(t.items) == 0 {[0m
+[38;5;208m38 |      return ""[0m
+[38;5;208m39 |  }[0m
+[38;5;208m40 |  return strings.Join(t.items, sep)[0m
+[38;5;208m41 | }[0m
+[38;5;208m42 | [0m
+[38;5;208m43 | // Reset is never called by the tests.[0m
+[38;5;208m44 | func (t *Truc) Reset() {[0m
+[38;5;208m45 |  t.items = nil[0m
+[38;5;208m46 | }[0m

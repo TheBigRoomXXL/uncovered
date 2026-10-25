@@ -7,32 +7,34 @@ import (
 	"io"
 	"os"
 	"strings"
+	"uncovered/pkg"
+	"uncovered/pkg/rendering"
 	"uncovered/pkg/shared"
 )
 
-// stringList collects a repeatable string option: every occurrence of the
-// flag appends instead of overwriting the previous value.
-type stringList []string
-
-func (list *stringList) String() string {
-	if list == nil {
-		return ""
+func RunFromCLI() {
+	config, err := NewConfigFromCLI(os.Args)
+	if errors.Is(err, flag.ErrHelp) {
+		// -h/-help is not an error: the flag set already printed the usage.
+		return
 	}
-	return strings.Join(*list, ",")
-}
-
-func (list *stringList) Set(value string) error {
-	if value == "" {
-		return fmt.Errorf("value cannot be empty")
+	if err != nil {
+		fmt.Println("usage error: ", err)
+		os.Exit(2)
 	}
-	*list = append(*list, value)
-	return nil
+
+	err = pkg.Run(config)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
 
 // Build the config from cli options
 func NewConfigFromCLI(args []string) (*shared.Config, error) {
 	// Default values
 	config := shared.NewConfig()
+	config.Ouput = os.Stdout
 
 	flags := flag.NewFlagSet(args[0], flag.ContinueOnError)
 	flags.SetOutput(io.Discard) // Parse now prints nothing on error
@@ -60,10 +62,31 @@ func NewConfigFromCLI(args []string) (*shared.Config, error) {
 	}
 	config.ReportPath = flags.Arg(0)
 
+	config.Render = rendering.NewRendererText(config.ContextSize, true)
+
 	err := shared.ValidateConfig(config)
 	if err != nil {
 		return nil, err
 	}
 
 	return config, nil
+}
+
+// stringList collects a repeatable string option: every occurrence of the
+// flag appends instead of overwriting the previous value.
+type stringList []string
+
+func (list *stringList) String() string {
+	if list == nil {
+		return ""
+	}
+	return strings.Join(*list, ",")
+}
+
+func (list *stringList) Set(value string) error {
+	if value == "" {
+		return fmt.Errorf("value cannot be empty")
+	}
+	*list = append(*list, value)
+	return nil
 }

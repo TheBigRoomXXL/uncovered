@@ -12,8 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const DIR_TEST_DATA = "../../testdata/"
-const DIR_REPORTS_COBERTURA = DIR_TEST_DATA + "reports/cobertura"
+const DIR_REPORTS_COBERTURA = "./test-data/cobertura"
 
 // ForFilesIn yields the filename and an opened *os.File for each non-directory entry in dirPath.
 // The yielded file is closed when the test (including parallel subtests) completes.

@@ -4,14 +4,18 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"io/fs"
+	"os"
 	"uncovered/pkg/shared"
 )
 
-func NewRendererMarkdown(sys fs.FS, contextSize int) shared.Renderer {
+func NewRendererMarkdown(contextSize int) shared.Renderer {
+	// FS is always the full file system, we only use it to facilitate tests of
+	// WithSources using an interface
+	fileSystem := os.DirFS("/")
+
 	return func(stream io.Writer, patchs []shared.Patch) {
 		streamBuffered := bufio.NewWriter(stream)
-		for patch := range WithSources(sys, patchs, contextSize) {
+		for patch := range WithSources(fileSystem, patchs, contextSize) {
 			RenderPatchMarkdown(streamBuffered, patch)
 			io.WriteString(stream, "\n")
 			streamBuffered.Flush()

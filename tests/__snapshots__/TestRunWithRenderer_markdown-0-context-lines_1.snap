@@ -1,0 +1,80 @@
+
+machin.go:10-11
+```diff
+-   case n < 0:
+-       return "negative"
+```
+
+machin.go:34-35
+```diff
+-       return 0, fmt.Errorf("cannot divide %d by zero", a)
+-   }
+```
+
+machin.go:40-44
+```diff
+- func Factorial(n int) int {
+-   if n <= 1 {
+-       return 1
+-   }
+-   return n * Factorial(n-1)
+```
+
+something.go/that.go:15-16
+```diff
+-       return errors.New("deposit must be positive")
+-   }
+```
+
+something.go/that.go:31-39
+```diff
+- func Transfer(from, to *Account, amount int) error {
+-   if err := from.Withdraw(amount); err != nil {
+-       return err
+-   }
+-   if err := to.Deposit(amount); err != nil {
+-       from.Balance += amount
+-       return err
+-   }
+-   return nil
+```
+
+something.go/this.go:17-18
+```diff
+-       s = strings.ToLower(s)
+-   }
+```
+
+something.go/this.go:23-31
+```diff
+- func CountVowels(s string) int {
+-   count := 0
+-   for _, c := range strings.ToLower(s) {
+-       switch c {
+-       case 'a', 'e', 'i', 'o', 'u':
+-           count++
+-       }
+-   }
+-   return count
+```
+
+truc.go:23-24
+```diff
+-       return "", ErrEmpty
+-   }
+```
+
+truc.go:36-46
+```diff
+- func (t *Truc) Join(sep string) string {
+-   if len(t.items) == 0 {
+-       return ""
+-   }
+-   return strings.Join(t.items, sep)
+- }
+- 
+- // Reset is never called by the tests.
+- func (t *Truc) Reset() {
+-   t.items = nil
+- }
+```
