@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const DIR_REPORTS_COBERTURA = "./test-data/cobertura"
+const DIR_REPORTS_COBERTURA = "./testdata/cobertura"
 
 // ForFilesIn yields the filename and an opened *os.File for each non-directory entry in dirPath.
 // The yielded file is closed when the test (including parallel subtests) completes.
@@ -23,7 +23,7 @@ func ForFilesIn(t *testing.T, dirPath string) iter.Seq2[string, *os.File] {
 	return func(yield func(string, *os.File) bool) {
 		entries, err := os.ReadDir(dirPath)
 		if err != nil {
-			return
+			t.Fatalf("failed to read test data directory: %v", err)
 		}
 
 		for _, entry := range entries {
@@ -35,7 +35,7 @@ func ForFilesIn(t *testing.T, dirPath string) iter.Seq2[string, *os.File] {
 
 			file, err := os.Open(path)
 			if err != nil {
-				continue
+				t.Fatalf("failed to open test data file: %v", err)
 			}
 			t.Cleanup(func() { file.Close() })
 

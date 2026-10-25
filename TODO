@@ -1,3 +1,6 @@
+Bugs:
+[ ] cobertura.go: swift.xml (ReportGenerator) has <class> directly under <package> (no <classes>) and its lines only under <methods>, so we extract nothing from it
+
 Testing
 [ ] user require insteadof assert everywhere
 [ ] Patch: assert Start and End > 0
