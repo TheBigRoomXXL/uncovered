@@ -35,7 +35,8 @@ Testing
 [ ] cobertura.go:  test if filterFile(class.Filename) { continue }
 
 Feature:
-[ ] supprot color configuration
+[X] supprot color configuration
+[ ] filtering with wildcard
 [ ] support muliple coverage file
 [ ] more coverage format
 [ ] redering with custom go tempalte
@@ -45,10 +46,13 @@ Feature:
 
 Perf:
 [ ] paralelle coverage parsing when multi file are given
-[ ] turn AddSource into a generator `WithContext` (could do the same WithSources for the html render )
-[ ] turn the renderers into a generator that take patch to print as soon as possible
+[X] turn AddSource into a generator `WithSource` (could do the same WithFile for the html render )
+[X] turn the renderers into a generator that take patch to print as soon as possible
 [ ] in PR workflow, publish the coverage report from uncovered
 
 
 Refactor: 
-[ ] In WithSources, patchs should already be sorted, SortPatch should be replaced with a preconditon
+[X] In WithSources, patchs should already be sorted, SortPatch should be replaced with a preconditon
+
+Perf
+[ ] Profile to see what is the botleneck
