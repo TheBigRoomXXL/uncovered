@@ -3,14 +3,13 @@ package parsing
 import (
 	"io"
 	"maps"
-	"os"
 	"path/filepath"
 	"slices"
 	"strings"
 	"uncovered/pkg/shared"
 )
 
-func Parse(report io.Reader, base string, contextSize int, filterFile func(string) bool) ([]shared.Patch, error) {
+func Parse(report io.Reader, base string, filterFile func(string) bool) ([]shared.Patch, error) {
 	base, err := filepath.Abs(base)
 	if err != nil {
 		return nil, err
@@ -22,11 +21,7 @@ func Parse(report io.Reader, base string, contextSize int, filterFile func(strin
 		return nil, err
 	}
 
-	patchs := Transform(coverage)
-
-	fileSystem := os.DirFS("/")
-	patchs = AddSources(fileSystem, patchs, contextSize)
-
+	patchs := SortPatch(Transform(coverage))
 	return patchs, nil
 }
 

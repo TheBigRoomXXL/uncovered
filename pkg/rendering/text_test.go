@@ -2,6 +2,7 @@ package rendering
 
 import (
 	"strconv"
+	"strings"
 	"testing"
 	"uncovered/pkg/shared"
 
@@ -18,7 +19,10 @@ func TestRenderPatchTextBasic(t *testing.T) {
 		Source:       []string{"uncovered"},
 		SourceAfter:  []string{"machin", "truc"},
 	}
-	got := RenderPatchText(p, false)
+
+	var b strings.Builder
+	RenderPatchText(&b, p, false)
+	got := b.String()
 
 	expected := `something.go:10
  8 |   bidule
@@ -39,7 +43,10 @@ func TestRenderPatchTextWithColor(t *testing.T) {
 		Source:       []string{"uncovered"},
 		SourceAfter:  []string{"machin", "truc"},
 	}
-	got := RenderPatchText(p, true)
+
+	var b strings.Builder
+	RenderPatchText(&b, p, true)
+	got := b.String()
 
 	c := ANSIColors
 	expected := "something.go:10\n" +

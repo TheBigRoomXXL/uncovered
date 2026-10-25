@@ -1,8 +1,10 @@
 package rendering
 
 import (
+	"bufio"
 	"fmt"
-	"strings"
+	"io"
+	"io/fs"
 	"uncovered/pkg/shared"
 )
 
@@ -27,8 +29,19 @@ var ANSINone = ANSI{
 	Dim:    "",
 }
 
+func NewRendererText(sys fs.FS, contextSize int, color bool) shared.Renderer {
+	return func(stream io.Writer, patchs []shared.Patch) {
+		streamBuffered := bufio.NewWriter(stream)
+		for patch := range WithSources(sys, patchs, contextSize) {
+			RenderPatchText(streamBuffered, patch, color)
+			io.WriteString(stream, "\n")
+			streamBuffered.Flush()
+		}
+	}
+}
+
 // Display a patch a text, color enable ANSI coloring
-func RenderPatchText(patch shared.Patch, color bool) string {
+func RenderPatchText(stream io.Writer, patch shared.Patch, color bool) {
 	ansi := ANSINone
 	hint := "✗ "
 	pad := "  "
@@ -37,34 +50,30 @@ func RenderPatchText(patch shared.Patch, color bool) string {
 		hint = ""
 		pad = ""
 	}
-
 	width := countDigits(patch.End + len(patch.SourceAfter))
 
-	var result strings.Builder
-	result.WriteString(patch.Identifier())
-	result.WriteString("\n")
+	io.WriteString(stream, patch.Identifier())
+	io.WriteString(stream, "\n")
 
 	if patch.SourceError != nil {
-		result.WriteString(fmt.Sprintf("%serror retriving source: %s%s\n", ansi.Red, patch.SourceError, ansi.Reset))
-		return result.String()
+		io.WriteString(stream, fmt.Sprintf("%serror retriving source: %s%s\n", ansi.Red, patch.SourceError, ansi.Reset))
+		return
 	}
 
 	for i, lineBefore := range patch.SourceBefore {
 		lineNo := patch.Start - len(patch.SourceBefore) + i
-		result.WriteString(fmt.Sprintf("%s%*d | %s%s%s\n", ansi.Dim, width, lineNo, pad, lineBefore, ansi.Reset))
+		io.WriteString(stream, fmt.Sprintf("%s%*d | %s%s%s\n", ansi.Dim, width, lineNo, pad, lineBefore, ansi.Reset))
 	}
 
 	for i, line := range patch.Source {
 		lineNo := patch.Start + i
-		result.WriteString(fmt.Sprintf("%s%*d | %s%s%s\n", ansi.Orange, width, lineNo, hint, line, ansi.Reset))
+		io.WriteString(stream, fmt.Sprintf("%s%*d | %s%s%s\n", ansi.Orange, width, lineNo, hint, line, ansi.Reset))
 	}
 
 	for i, lineAfter := range patch.SourceAfter {
 		lineNo := patch.End + i + 1
-		result.WriteString(fmt.Sprintf("%s%*d | %s%s%s\n", ansi.Dim, width, lineNo, pad, lineAfter, ansi.Reset))
+		io.WriteString(stream, fmt.Sprintf("%s%*d | %s%s%s\n", ansi.Dim, width, lineNo, pad, lineAfter, ansi.Reset))
 	}
-
-	return result.String()
 }
 
 func countDigits(n int) int {

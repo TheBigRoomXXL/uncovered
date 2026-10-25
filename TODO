@@ -1,4 +1,5 @@
 Testing
+[ ] user require insteadof assert everywhere
 [ ] Patch: assert Start and End > 0
 [X] source.go:  assert context size is > 0
 [ ] source.go:  test emtpy patch list 
@@ -34,15 +35,20 @@ Testing
 [ ] cobertura.go:  test if filterFile(class.Filename) { continue }
 
 Feature:
-- support muliple coverage file
-- more coverage format
-- redering with custom go tempalte
-- rendering html
-- context based filtering
-- git diff based filtering
+[ ] supprot color configuration
+[ ] support muliple coverage file
+[ ] more coverage format
+[ ] redering with custom go tempalte
+[ ] rendering html
+[ ] context based filtering
+[ ] git diff based filtering
 
 Perf:
-- paralelle coverage parsing when multi file are given
-- turn AddSource into a generator `WithContext` (could do the same WithSources for the html render )
-- turn the renderers into a generator that take patch to print as soon as possible
-- in PR workflow, publish the coverage report from uncovered
+[ ] paralelle coverage parsing when multi file are given
+[ ] turn AddSource into a generator `WithContext` (could do the same WithSources for the html render )
+[ ] turn the renderers into a generator that take patch to print as soon as possible
+[ ] in PR workflow, publish the coverage report from uncovered
+
+
+Refactor: 
+[ ] In WithSources, patchs should already be sorted, SortPatch should be replaced with a preconditon

@@ -1,6 +1,7 @@
 package rendering
 
 import (
+	"strings"
 	"testing"
 	"uncovered/pkg/shared"
 
@@ -16,7 +17,10 @@ func TestRenderPatchMarkdownBasic(t *testing.T) {
 		Source:       []string{"uncovered"},
 		SourceAfter:  []string{"machin", "truc"},
 	}
-	got := RenderPatchMarkdown(p)
+
+	var b strings.Builder
+	RenderPatchMarkdown(&b, p)
+	got := b.String()
 
 	expected := "something.go:10\n" +
 		"```diff\n" +

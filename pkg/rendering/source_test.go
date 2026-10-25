@@ -1,6 +1,7 @@
-package parsing
+package rendering
 
 import (
+	"slices"
 	"testing"
 	"testing/fstest"
 	"uncovered/pkg/shared"
@@ -19,7 +20,7 @@ var mockFS = fstest.MapFS{
 	},
 }
 
-func TestAddSources(t *testing.T) {
+func TestWithSources(t *testing.T) {
 	t.Parallel()
 
 	testCases := []struct {
@@ -113,7 +114,7 @@ func TestAddSources(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
-			results := AddSources(mockFS, []shared.Patch{tc.patch}, tc.contextSize)
+			results := slices.Collect(WithSources(mockFS, []shared.Patch{tc.patch}, tc.contextSize))
 			assert.Equal(t, len(results), 1)
 			assert.Equal(t, results[0].File, tc.patch.File)
 			assert.Equal(t, results[0].Start, tc.patch.Start)
@@ -126,7 +127,7 @@ func TestAddSources(t *testing.T) {
 	}
 }
 
-func TestAddSourcesContextOverlap(t *testing.T) {
+func TestWithSourcesContextOverlap(t *testing.T) {
 	t.Parallel()
 
 	patchs := []shared.Patch{
@@ -144,7 +145,7 @@ func TestAddSourcesContextOverlap(t *testing.T) {
 		},
 	}
 
-	results := AddSources(mockFS, patchs, 3)
+	results := slices.Collect(WithSources(mockFS, patchs, 3))
 
 	assert.Len(t, results, 2)
 
@@ -171,7 +172,7 @@ func TestAddSourcesContextOverlap(t *testing.T) {
 	})
 }
 
-func TestAddSourcesPanicOnColidingPatchs(t *testing.T) {
+func TestWithSourcesPanicOnColidingPatchs(t *testing.T) {
 	t.Parallel()
 	// The following patch share the line 4. They should have been merge instead.
 	// We should detect the malformation and panic
@@ -190,11 +191,12 @@ func TestAddSourcesPanicOnColidingPatchs(t *testing.T) {
 	}
 
 	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
-		AddSources(mockFS, patchs, 1)
+		for range WithSources(mockFS, patchs, 1) {
+		}
 	})
 }
 
-func TestAddSourcesPanicOnAdjacentPatchs(t *testing.T) {
+func TestWithSourcesPanicOnAdjacentPatchs(t *testing.T) {
 	t.Parallel()
 	// The following patch share the line 4. They should have been merge instead.
 	// We should detect the malformation and panic
@@ -213,11 +215,12 @@ func TestAddSourcesPanicOnAdjacentPatchs(t *testing.T) {
 	}
 
 	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
-		AddSources(mockFS, patchs, 1)
+		for range WithSources(mockFS, patchs, 1) {
+		}
 	})
 }
 
-func TestAddSourcesPanicOnEmptyPatchs(t *testing.T) {
+func TestWithSourcesPanicOnEmptyPatchs(t *testing.T) {
 	t.Parallel()
 	// Start is greater than End
 	// We should detect the malformation and panic
@@ -231,11 +234,12 @@ func TestAddSourcesPanicOnEmptyPatchs(t *testing.T) {
 	}
 
 	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
-		AddSources(mockFS, patchs, 1)
+		for range WithSources(mockFS, patchs, 1) {
+		}
 	})
 }
 
-func TestAddSourcesPanicOnNegativeContextSize(t *testing.T) {
+func TestWithSourcesPanicOnNegativeContextSize(t *testing.T) {
 	t.Parallel()
 	// Start is greater than End
 	// We should detect the malformation and panic
@@ -249,6 +253,54 @@ func TestAddSourcesPanicOnNegativeContextSize(t *testing.T) {
 	}
 
 	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
-		AddSources(mockFS, patchs, -1)
+		for range WithSources(mockFS, patchs, -1) {
+		}
+	})
+}
+
+func TestWithSourcesEarlyBreak(t *testing.T) {
+	t.Parallel()
+
+	patchs := []shared.Patch{
+		{File: "fixture.go", FileAbs: "fixture.go", Start: 1, End: 1},
+		{File: "fixture.go", FileAbs: "fixture.go", Start: 3, End: 3},
+		{File: "missing.go", FileAbs: "missing.go", Start: 1, End: 1},
+	}
+
+	count := 0
+	for patch := range WithSources(mockFS, patchs, 0) {
+		count++
+		assert.Equal(t, patch.Source, []string{"1 blablabla"})
+		break
+	}
+	assert.Equal(t, count, 1)
+}
+
+func TestWithSourcesPanicOnUnsortedStart(t *testing.T) {
+	t.Parallel()
+	// Patchs of the same file must be sorted by start
+	patchs := []shared.Patch{
+		{File: "fixture.go", FileAbs: "fixture.go", Start: 5, End: 5},
+		{File: "fixture.go", FileAbs: "fixture.go", Start: 1, End: 1},
+	}
+
+	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
+		for range WithSources(mockFS, patchs, 1) {
+		}
+	})
+}
+
+func TestWithSourcesPanicOnUnsortedFile(t *testing.T) {
+	t.Parallel()
+	// Patchs must be sorted by file, a file cannot come back once its run is over
+	patchs := []shared.Patch{
+		{File: "fixture.go", FileAbs: "fixture.go", Start: 1, End: 1},
+		{File: "other.go", FileAbs: "other.go", Start: 1, End: 1},
+		{File: "fixture.go", FileAbs: "fixture.go", Start: 3, End: 3},
+	}
+
+	shared.AssertViolationKind(t, shared.KindPreCondition, func() {
+		for range WithSources(mockFS, patchs, 1) {
+		}
 	})
 }

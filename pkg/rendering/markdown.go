@@ -1,34 +1,44 @@
 package rendering
 
 import (
+	"bufio"
 	"fmt"
-	"strings"
+	"io"
+	"io/fs"
 	"uncovered/pkg/shared"
 )
 
-// Display a patch a markdown
-func RenderPatchMarkdown(patch shared.Patch) string {
-	var result strings.Builder
-	result.WriteString(patch.Identifier())
+func NewRendererMarkdown(sys fs.FS, contextSize int) shared.Renderer {
+	return func(stream io.Writer, patchs []shared.Patch) {
+		streamBuffered := bufio.NewWriter(stream)
+		for patch := range WithSources(sys, patchs, contextSize) {
+			RenderPatchMarkdown(streamBuffered, patch)
+			io.WriteString(stream, "\n")
+			streamBuffered.Flush()
+		}
+	}
+}
+
+// Display a patch as markdown
+func RenderPatchMarkdown(stream io.Writer, patch shared.Patch) {
+	io.WriteString(stream, patch.Identifier())
 
 	if patch.SourceError != nil {
-		result.WriteString(fmt.Sprintf("error retriving source: %s\n", patch.SourceError))
-		return result.String()
+		fmt.Fprintf(stream, "error retriving source: %s\n", patch.SourceError)
+		return
 	}
 
-	result.WriteString("\n```diff\n")
+	io.WriteString(stream, "\n```diff\n")
 	for _, lineBefore := range patch.SourceBefore {
-		result.WriteString(fmt.Sprintf("  %s\n", lineBefore))
+		fmt.Fprintf(stream, "  %s\n", lineBefore)
 	}
 
 	for _, line := range patch.Source {
-		result.WriteString(fmt.Sprintf("- %s\n", line))
+		fmt.Fprintf(stream, "- %s\n", line)
 	}
 
 	for _, lineAfter := range patch.SourceAfter {
-		result.WriteString(fmt.Sprintf("  %s\n", lineAfter))
+		fmt.Fprintf(stream, "  %s\n", lineAfter)
 	}
-	result.WriteString("```\n")
-
-	return result.String()
+	io.WriteString(stream, "```\n")
 }

@@ -2,6 +2,7 @@ package shared
 
 import (
 	"fmt"
+	"io"
 	"strings"
 )
 
@@ -34,3 +35,6 @@ func (p *Patch) Identifier() string {
 	}
 	return result.String()
 }
+
+type Parser = func(stream io.Writer, patchs []Patch)
+type Renderer = func(stream io.Writer, patchs []Patch)

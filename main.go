@@ -40,13 +40,14 @@ func Run(config *shared.Config) error {
 	defer report.Close()
 
 	filter := filtering.Filter(config.Includes, config.Excludes)
-	patchs, err := parsing.Parse(report, config.Base, config.ContextSize, filter)
+	patchs, err := parsing.Parse(report, config.Base, filter)
 	if err != nil {
 		return fmt.Errorf("failed to parse report: %w", err)
 	}
-	for _, patch := range patchs {
-		// TODO: add color to config, based on env.
-		fmt.Println(rendering.RenderPatchText(patch, true))
-	}
+
+	fileSystem := os.DirFS("/")
+	render := rendering.NewRendererText(fileSystem, config.ContextSize, true)
+	render(os.Stdout, patchs)
+
 	return nil
 }
