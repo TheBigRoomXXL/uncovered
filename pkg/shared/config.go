@@ -11,6 +11,7 @@ type Config struct {
 	Includes    []string
 	Excludes    []string
 	ContextSize int
+	Color       bool
 	Base        string
 	Ouput       io.Writer
 	Render      Renderer
@@ -22,6 +23,7 @@ func NewConfig() *Config {
 		Includes:    []string{},
 		Excludes:    []string{},
 		ContextSize: 3,
+		Color:       true,
 	}
 }
 
